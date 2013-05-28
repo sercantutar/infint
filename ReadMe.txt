@@ -11,7 +11,7 @@ It is pretty straight forward to use the library. Just create an instance of Inf
 
     myint1 *= --myint2 - 3;
     std::cout << myint1 << std::endl;
-    
+
 Useful methods:
 
     intSqrt: integer square root operation
@@ -19,7 +19,7 @@ Useful methods:
     numberOfDigits: returns number of digits
     size: returns size in bytes
     toString: converts it to a string
-    
+
 There are also conversion methods which allow conversion to primitive types:
 
     toInt, toLong, toLongLong, toUnsignedInt, toUnsignedLong, toUnsignedLongLong.
