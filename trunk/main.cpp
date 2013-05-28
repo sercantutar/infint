@@ -90,7 +90,7 @@ void testInfInteger()
 }
 
 int main(int argc, const char * argv[])
-{PROFILED_SCOPE
+{//PROFILED_SCOPE
 	//testInfInteger();
 	//std::cout << fib(100000) << std::endl;
 	std::cout << fact(10000) << std::endl;
