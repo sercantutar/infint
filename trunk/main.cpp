@@ -5,7 +5,7 @@
 InfInt fib(InfInt n)
 {
 	InfInt pp = 0, p = 1;
-	for (InfInt i=3; i<n; ++i)
+	for (InfInt i=2; i<n; ++i)
 	{
 		InfInt op = p;
 		p += pp;
@@ -90,9 +90,11 @@ void testInfInteger()
 }
 
 int main(int argc, const char * argv[])
-{
-	testInfInteger();
-	std::cout << fib(10000) << std::endl << std::endl;
-	std::cout << fact(1000) << std::endl;
+{PROFILED_SCOPE
+	//testInfInteger();
+	//std::cout << fib(100000) << std::endl;
+	std::cout << fact(10000) << std::endl;
+
+	//atexit(Profiler::print);
 	return 0;
 }
