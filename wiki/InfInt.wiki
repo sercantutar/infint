@@ -9,12 +9,12 @@ InfInt is simply a lightweight large integer library which consists of a header 
 It is pretty straight forward to use the library. Just create an instance of InfInt class and start using it.
 
 Useful methods:
-   intSqrt:        integer square root operation
-   digitAt:        returns digit at index
-   numberOfDigits: returns number of digits
-   size:           returns size in bytes
-   toString:       converts it to a string
+  * *intSqrt*:        integer square root operation
+  * *digitAt*:        returns digit at index
+  * *numberOfDigits*: returns number of digits
+  * *size*:           returns size in bytes
+  * *toString*:       converts it to a string
 
-There are also conversion methods which allow conversion to primitive types: toInt, toLong, toLongLong, toUnsignedInt, toUnsignedLong, toUnsignedLongLong.
+There are also conversion methods which allow conversion to primitive types: *toInt*, *toLong*, *toLongLong*, *toUnsignedInt*, *toUnsignedLong*, *toUnsignedLongLong*.
 
-You may define INFINT_USE_EXCEPTIONS and library methods will start raising InfIntException in case of error instead of writing error messages using std::cerr.
+You may define *INFINT_USE_EXCEPTIONS* and library methods will start raising InfIntException in case of error instead of writing error messages using std::cerr.
