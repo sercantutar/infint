@@ -6,7 +6,15 @@ InfInt is simply a lightweight large integer library which consists of a header 
 
 = Details =
 
-It is pretty straight forward to use the library. Just create an instance of InfInt class and start using it.
+It is pretty straight forward to use the library. Just create an instance of InfInt class and start using it:
+
+{{{
+    InfInt myint1 = "15432154865413186646848435184100510168404641560358";
+    InfInt myint2 = 156341300544608LL;
+
+    myint1 *= --myint2 - 3;
+    std::cout << myint1 << std::endl;
+}}}
 
 Useful methods:
   * *intSqrt*:        integer square root operation
