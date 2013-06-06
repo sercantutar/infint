@@ -55,7 +55,7 @@
 
 //#include "Profiler.h"
 
-#ifdef WIN32
+#ifdef _WIN32
 #define LONG_LONG_MIN LLONG_MIN
 #define LONG_LONG_MAX LLONG_MAX
 #define ULONG_LONG_MIN ULLONG_MIN
@@ -71,11 +71,11 @@
 
 //inline bool check_pos(int n)
 //{
-//	return n >= 0;
+//    return n >= 0;
 //}
 //inline bool check_neg(int n)
 //{
-//	return n <= 0;
+//    return n <= 0;
 //}
 
 #ifdef INFINT_USE_SHORT_BASE // uses 10^4 (short) as the base
@@ -274,7 +274,7 @@ inline InfInt::InfInt(long long l) : pos(l >= 0)
     }
     do
     {
-#ifndef WIN32
+#ifndef _WIN32
         lldiv_t dt = lldiv(l, BASE);
         val.push_back((ELEM_TYPE) dt.rem);
         l = dt.quot;
@@ -368,7 +368,7 @@ inline const InfInt& InfInt::operator=(long long l)
     }
     do
     {
-#ifndef WIN32
+#ifndef _WIN32
         lldiv_t dt = lldiv(l, BASE);
         val.push_back((ELEM_TYPE) dt.rem);
         l = dt.quot;
@@ -448,10 +448,10 @@ inline InfInt InfInt::operator--(int)
 
 inline const InfInt& InfInt::operator+=(const InfInt& rhs)
 {
-	if (rhs.val.size() > val.size())
-	{
-		val.resize(rhs.val.size(), 0);
-	}
+    if (rhs.val.size() > val.size())
+    {
+        val.resize(rhs.val.size(), 0);
+    }
     for (size_t i = 0; i < val.size(); ++i)
     {
         val[i] = (pos ? val[i] : -val[i]) + (i < rhs.val.size() ? (rhs.pos ? rhs.val[i] : -rhs.val[i]) : 0);
@@ -462,10 +462,10 @@ inline const InfInt& InfInt::operator+=(const InfInt& rhs)
 
 inline const InfInt& InfInt::operator-=(const InfInt& rhs)
 {
-	if (rhs.val.size() > val.size())
-	{
-		val.resize(rhs.val.size(), 0);
-	}
+    if (rhs.val.size() > val.size())
+    {
+        val.resize(rhs.val.size(), 0);
+    }
     for (size_t i = 0; i < val.size(); ++i)
     {
         val[i] = (pos ? val[i] : -val[i]) - (i < rhs.val.size() ? (rhs.pos ? rhs.val[i] : -rhs.val[i]) : 0);
@@ -498,7 +498,7 @@ inline const InfInt& InfInt::operator/=(const InfInt& rhs)
     val.resize(N.val.size(), 0);
     for (int i = (int) N.val.size() - 1; i >= 0; --i)
     {
-    	R.val.insert(R.val.begin(), (ELEM_TYPE) 0);
+        R.val.insert(R.val.begin(), (ELEM_TYPE) 0);
         R.val[0] = N.val[i];
         R.correct(true);
         ELEM_TYPE cnt = dInR(R, D);
@@ -526,7 +526,7 @@ inline const InfInt& InfInt::operator%=(const InfInt& rhs)
     val.clear();
     for (int i = (int) N.val.size() - 1; i >= 0; --i)
     {
-    	val.insert(val.begin(), (ELEM_TYPE) 0);
+        val.insert(val.begin(), (ELEM_TYPE) 0);
         val[0] = N.val[i];
         correct(true);
         *this -= D * dInR(*this, D);
@@ -590,23 +590,23 @@ inline InfInt InfInt::operator*(const InfInt& rhs) const
 
         PRODUCT_TYPE oldcarry = carry;
         carry /= BASE;
-        result.val[digit] = oldcarry - carry * BASE;
+        result.val[digit] = (ELEM_TYPE) (oldcarry - carry * BASE);
 
         bool found = false;
         for (size_t i = digit < rhs.val.size() ? 0 : digit - rhs.val.size() + 1; i < val.size() && i <= digit; ++i)
         {//PROFILED_SCOPE
-			PRODUCT_TYPE pval = result.val[digit] + val[i] * (PRODUCT_TYPE) rhs.val[digit - i];
-			if (pval >= BASE || pval <= -BASE)
-			{//PROFILED_SCOPE
-				//carry += pval / BASE;
-				//pval %= BASE;
+            PRODUCT_TYPE pval = result.val[digit] + val[i] * (PRODUCT_TYPE) rhs.val[digit - i];
+            if (pval >= BASE || pval <= -BASE)
+            {//PROFILED_SCOPE
+                //carry += pval / BASE;
+                //pval %= BASE;
 
-				PRODUCT_TYPE quot = pval / BASE;
-				carry += quot;
-				pval -= quot * BASE;
-			}
-			result.val[digit] = (ELEM_TYPE) pval;
-			found = true;
+                PRODUCT_TYPE quot = pval / BASE;
+                carry += quot;
+                pval -= quot * BASE;
+            }
+            result.val[digit] = (ELEM_TYPE) pval;
+            found = true;
         }
         if (!found)
         {//PROFILED_SCOPE
@@ -638,7 +638,7 @@ inline InfInt InfInt::operator/(const InfInt& rhs) const
     Q.val.resize(N.val.size(), 0);
     for (int i = (int) N.val.size() - 1; i >= 0; --i)
     {//PROFILED_SCOPE
-    	R.val.insert(R.val.begin(), (ELEM_TYPE) 0);
+        R.val.insert(R.val.begin(), (ELEM_TYPE) 0);
         R.val[0] = N.val[i];
         R.correct(true);
         ELEM_TYPE cnt = dInR(R, D);
@@ -664,7 +664,7 @@ inline InfInt InfInt::operator%(const InfInt& rhs) const
     InfInt R, D = (rhs.pos ? rhs : -rhs), N = (pos ? *this : -*this);
     for (int i = (int) N.val.size() - 1; i >= 0; --i)
     {
-    	R.val.insert(R.val.begin(), (ELEM_TYPE) 0);
+        R.val.insert(R.val.begin(), (ELEM_TYPE) 0);
         R.val[0] = N.val[i];
         R.correct(true);
         R -= D * dInR(R, D);
@@ -886,7 +886,7 @@ inline InfInt InfInt::intSqrt() const
         }
         else if (mid2 < *this)
         {
-        	lo = mid;
+            lo = mid;
         }
         else
         {
@@ -1051,14 +1051,14 @@ inline void InfInt::truncateToBase()
 
 inline bool InfInt::equalizeSigns()
 {//PROFILED_SCOPE
-	bool isPositive = true;
-	int i = (int) ((val.size())) - 1;
+    bool isPositive = true;
+    int i = (int) ((val.size())) - 1;
     for (; i >= 0; --i)
     {
         if (val[i] != 0)
         {
-        	isPositive = val[i--] > 0;
-        	break;
+            isPositive = val[i--] > 0;
+            break;
         }
     }
 
@@ -1088,17 +1088,17 @@ inline bool InfInt::equalizeSigns()
         {
             if (val[i] > 0)
             {
-            	int k = 0, index = i + 1;
-            	for (; (size_t)(index) < val.size() && val[index] == 0; ++k, ++index); // count adjacent zeros on right
-            	//if ((size_t)(index) < val.size() && val[index] < 0)
-            	{ // number on the left is negative
-            		val[index] += 1;
-            		val[i] -= BASE;
-            		for (; k > 0; --k)
-            		{
-            			val[i + k] = -UPPER_BOUND;
-            		}
-            	}
+                int k = 0, index = i + 1;
+                for (; (size_t)(index) < val.size() && val[index] == 0; ++k, ++index); // count adjacent zeros on right
+                //if ((size_t)(index) < val.size() && val[index] < 0)
+                { // number on the left is negative
+                    val[index] += 1;
+                    val[i] -= BASE;
+                    for (; k > 0; --k)
+                    {
+                        val[i + k] = -UPPER_BOUND;
+                    }
+                }
             }
         }
     }
@@ -1211,7 +1211,7 @@ inline void InfInt::multiplyByDigit(ELEM_TYPE factor, std::vector<ELEM_TYPE>& va
         if (pval >= BASE || pval <= -BASE)
         {
             //carry = (ELEM_TYPE) (pval / BASE);
-        	//pval %= BASE;
+            //pval %= BASE;
 
             carry = (ELEM_TYPE) (pval / BASE);
             pval -= carry * BASE;
