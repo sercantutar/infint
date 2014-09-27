@@ -864,16 +864,16 @@ inline void InfInt::optimizeSqrtSearchBounds(InfInt& lo, InfInt& hi) const
 
 inline InfInt InfInt::intSqrt() const
 {//PROFILED_SCOPE
-    if (*this < zero)
+    if (*this <= zero)
     {
 #ifdef INFINT_USE_EXCEPTIONS
-        throw InfIntException("intSqrt called for negative integer");
+        throw InfIntException("intSqrt called for non-positive integer");
 #else
-        std::cerr << "intSqrt called for negative integer: " << *this << std::endl;
+        std::cerr << "intSqrt called for non-positive integer: " << *this << std::endl;
         return zero;
 #endif
     }
-    InfInt hi = *this / two, lo = zero, mid, mid2;
+    InfInt hi = *this / two + one, lo = zero, mid, mid2;
     optimizeSqrtSearchBounds(lo, hi);
     do
     {

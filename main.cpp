@@ -87,13 +87,23 @@ void testInfInteger()
 			assert(i1 == myint1 % myint2);
 		}
 	}
+
+	assert(InfInt(1).intSqrt() == 1);
+	assert(InfInt(2).intSqrt() == 1);
+	assert(InfInt(3).intSqrt() == 1);
+	assert(InfInt(4).intSqrt() == 2);
+	assert(InfInt(5).intSqrt() == 2);
+	assert(InfInt(6).intSqrt() == 2);
+	assert(InfInt(7).intSqrt() == 2);
+	assert(InfInt(8).intSqrt() == 2);
+	assert(InfInt(9).intSqrt() == 3);
 }
 
 int main(int argc, const char * argv[])
 {//PROFILED_SCOPE
-	//testInfInteger();
+	testInfInteger();
 	//std::cout << fib(100000) << std::endl;
-	std::cout << fact(10000) << std::endl;
+	//std::cout << fact(10000) << std::endl;
 
 	//atexit(Profiler::print);
 	return 0;
