@@ -1184,7 +1184,7 @@ inline ELEM_TYPE InfInt::dInR(const InfInt& R, const InfInt& D)
         //div_t dt = div(avg, 2);
         //avg = dt.rem ? (dt.quot + 1) : dt.quot;
         ELEM_TYPE havg = avg / 2;
-        avg = avg - havg * 2 ? (havg + 1) : havg;
+        avg = (avg - havg * 2) ? (havg + 1) : havg;
         InfInt prod = D * avg;
         if (R == prod)
         {//PROFILED_SCOPE
