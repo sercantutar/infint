@@ -105,16 +105,16 @@ private:
     std::string txt;
 };
 
-InfIntException::InfIntException(const std::string& txt) throw () :
+inline InfIntException::InfIntException(const std::string& txt) throw () :
 std::exception(), txt(txt)
 {
 }
 
-InfIntException::~InfIntException() throw ()
+inline InfIntException::~InfIntException() throw ()
 {
 }
 
-const char* InfIntException::what() const throw ()
+inline const char* InfIntException::what() const throw ()
 {
     return txt.c_str();
 }
@@ -219,9 +219,11 @@ private:
     bool pos; // true if number is positive
 };
 
+#ifndef INFINT_STATICS_DECLARED
 const InfInt InfInt::zero = 0;
 const InfInt InfInt::one = 1;
 const InfInt InfInt::two = 2;
+#endif
 
 inline InfInt::InfInt() : pos(true)
 {
