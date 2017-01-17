@@ -221,12 +221,12 @@ inline InfInt::InfInt(const std::string& s)
 
 inline InfInt::InfInt(int l) : pos(l >= 0)
 {
-	bool subtractOne = false;
-	if (l == INT_MIN)
-	{
-		subtractOne = true;
-		++l;
-	}
+    bool subtractOne = false;
+    if (l == INT_MIN)
+    {
+        subtractOne = true;
+        ++l;
+    }
 
     if (!pos)
     {
@@ -239,22 +239,22 @@ inline InfInt::InfInt(int l) : pos(l >= 0)
         l = dt.quot;
     } while (l > 0);
 
-	if (subtractOne)
-	{
-		--*this;
-	}
+    if (subtractOne)
+    {
+        --*this;
+    }
 }
 
 inline InfInt::InfInt(long l) : pos(l >= 0)
 {
-	bool subtractOne = false;
-	if (l == LONG_MIN)
-	{
-		subtractOne = true;
-		++l;
-	}
+    bool subtractOne = false;
+    if (l == LONG_MIN)
+    {
+        subtractOne = true;
+        ++l;
+    }
 
-	if (!pos)
+    if (!pos)
     {
         l = -l;
     }
@@ -265,22 +265,22 @@ inline InfInt::InfInt(long l) : pos(l >= 0)
         l = dt.quot;
     } while (l > 0);
 
-	if (subtractOne)
-	{
-		--*this;
-	}
+    if (subtractOne)
+    {
+        --*this;
+    }
 }
 
 inline InfInt::InfInt(long long l) : pos(l >= 0)
 {
-	bool subtractOne = false;
-	if (l == LONG_LONG_MIN)
-	{
-		subtractOne = true;
-		++l;
-	}
+    bool subtractOne = false;
+    if (l == LONG_LONG_MIN)
+    {
+        subtractOne = true;
+        ++l;
+    }
 
-	if (!pos)
+    if (!pos)
     {
         l = -l;
     }
@@ -296,10 +296,10 @@ inline InfInt::InfInt(long long l) : pos(l >= 0)
 #endif
     } while (l > 0);
 
-	if (subtractOne)
-	{
-		--*this;
-	}
+    if (subtractOne)
+    {
+        --*this;
+    }
 }
 
 inline InfInt::InfInt(unsigned int l) : pos(true)
@@ -343,14 +343,14 @@ inline const InfInt& InfInt::operator=(const std::string& s)
 
 inline const InfInt& InfInt::operator=(int l)
 {
-	bool subtractOne = false;
-	if (l == INT_MIN)
-	{
-		subtractOne = true;
-		++l;
-	}
+    bool subtractOne = false;
+    if (l == INT_MIN)
+    {
+        subtractOne = true;
+        ++l;
+    }
 
-	pos = l >= 0;
+    pos = l >= 0;
     val.clear();
     if (!pos)
     {
@@ -363,19 +363,19 @@ inline const InfInt& InfInt::operator=(int l)
         l = dt.quot;
     } while (l > 0);
 
-	return subtractOne ? --*this : *this;
+    return subtractOne ? --*this : *this;
 }
 
 inline const InfInt& InfInt::operator=(long l)
 {
-	bool subtractOne = false;
-	if (l == LONG_MIN)
-	{
-		subtractOne = true;
-		++l;
-	}
+    bool subtractOne = false;
+    if (l == LONG_MIN)
+    {
+        subtractOne = true;
+        ++l;
+    }
 
-	pos = l >= 0;
+    pos = l >= 0;
     val.clear();
     if (!pos)
     {
@@ -388,19 +388,19 @@ inline const InfInt& InfInt::operator=(long l)
         l = dt.quot;
     } while (l > 0);
 
-	return subtractOne ? --*this : *this;
+    return subtractOne ? --*this : *this;
 }
 
 inline const InfInt& InfInt::operator=(long long l)
 {
-	bool subtractOne = false;
-	if (l == LONG_LONG_MIN)
-	{
-		subtractOne = true;
-		++l;
-	}
+    bool subtractOne = false;
+    if (l == LONG_LONG_MIN)
+    {
+        subtractOne = true;
+        ++l;
+    }
 
-	pos = l >= 0;
+    pos = l >= 0;
     val.clear();
     if (!pos)
     {
@@ -418,7 +418,7 @@ inline const InfInt& InfInt::operator=(long long l)
 #endif
     } while (l > 0);
 
-	return subtractOne ? --*this : *this;
+    return subtractOne ? --*this : *this;
 }
 
 inline const InfInt& InfInt::operator=(unsigned int l)
@@ -559,7 +559,7 @@ inline const InfInt& InfInt::operator%=(const InfInt& rhs)
         throw InfIntException("division by zero");
 #else
         std::cerr << "Division by zero!" << std::endl;
-		return *this;
+        return *this;
 #endif
     }
     InfInt D = (rhs.pos ? rhs : -rhs), N = (pos ? *this : -*this);
