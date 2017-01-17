@@ -223,7 +223,9 @@ inline InfInt::InfInt(int l) : pos(l >= 0)
 {
     if (!pos)
     {
-        l = -l;
+        // avoid corner case for INT_MIN by adding one
+        // and undoing it later
+        l = -(l+1);
     }
     do
     {
@@ -231,13 +233,22 @@ inline InfInt::InfInt(int l) : pos(l >= 0)
         val.push_back((ELEM_TYPE) dt.rem);
         l = dt.quot;
     } while (l > 0);
+
+    // undo the operation made when handling the corner case
+    if (!pos)
+    {
+        // since pos = false, this is equivalent to subtracting 1
+        val[0] += 1;
+    }
 }
 
 inline InfInt::InfInt(long l) : pos(l >= 0)
 {
     if (!pos)
     {
-        l = -l;
+        // avoid corner case for LONG_MIN by adding one
+        // and undoing it later
+        l = -(l+1);
     }
     do
     {
@@ -245,13 +256,21 @@ inline InfInt::InfInt(long l) : pos(l >= 0)
         val.push_back((ELEM_TYPE) dt.rem);
         l = dt.quot;
     } while (l > 0);
+    // undo the operation made when handling the corner case
+    if (!pos)
+    {
+        // since pos = false, this is equivalent to subtracting 1
+        val[0] += 1;
+    }
 }
 
 inline InfInt::InfInt(long long l) : pos(l >= 0)
 {
     if (!pos)
     {
-        l = -l;
+        // avoid corner case for LONG_LONG_MIN by adding one
+        // and undoing it later
+        l = -(l+1);
     }
     do
     {
@@ -264,6 +283,12 @@ inline InfInt::InfInt(long long l) : pos(l >= 0)
         l = l / BASE;
 #endif
     } while (l > 0);
+    // undo the operation made when handling the corner case
+    if (!pos)
+    {
+        // since pos = false, this is equivalent to subtracting 1
+        val[0] += 1;
+    }
 }
 
 inline InfInt::InfInt(unsigned int l) : pos(true)

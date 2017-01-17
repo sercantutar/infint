@@ -1,6 +1,7 @@
 #include "InfInt.h"
 
 #include <assert.h>
+#include <limits.h>
 
 InfInt fib(InfInt n)
 {
@@ -34,6 +35,20 @@ void testInfInteger()
 	for (int i = 0; i < 100; ++i)
 	{
 		InfInt i1, i2;
+		{
+			// test that '==' works for edge conditions
+			assert(InfInt(INT_MIN) == INT_MIN);
+			// but also test the same with toInt because
+			// a bug in InfInt constructors can be masked
+			// with the '==' test
+			assert(InfInt(INT_MIN).toInt() == INT_MIN);
+			// do the same for long
+			assert(InfInt(LONG_MIN) == LONG_MIN);
+			assert(InfInt(LONG_MIN).toLong() == LONG_MIN);
+			// and long long
+			assert(InfInt(LONG_LONG_MIN) == LONG_LONG_MIN);
+			assert(InfInt(LONG_LONG_MIN).toLongLong() == LONG_LONG_MIN);
+		}
 		{
 			i1 = myint1++;
 			assert(i1-- == myint1-1);
