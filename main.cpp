@@ -1,6 +1,8 @@
 #include "InfInt.h"
 
 #include <assert.h>
+#include <limits.h>
+#include <iostream>
 
 InfInt fib(InfInt n)
 {
@@ -31,6 +33,37 @@ void testInfInteger()
 	std::cout << "SIZES: " << myint1.size() << " " << myint2.size() << std::endl;
 	//myint2.toInt(); myint2.tol(); myint2.toll();
 	//myint2.toui(); myint2.toUnsignedLong(); myint2.toUnsignedLongLong();
+	{
+		assert(InfInt(INT_MIN) == INT_MIN);
+		assert(InfInt(INT_MAX) == INT_MAX);
+		assert(InfInt(INT_MIN).toInt() == INT_MIN);
+		assert(InfInt(INT_MAX).toInt() == INT_MAX);
+
+		assert(InfInt(LONG_MIN) == LONG_MIN);
+		assert(InfInt(LONG_MAX) == LONG_MAX);
+		assert(InfInt(LONG_MIN).toLong() == LONG_MIN);
+		assert(InfInt(LONG_MAX).toLong() == LONG_MAX);
+
+		assert(InfInt(LONG_LONG_MIN) == LONG_LONG_MIN);
+		assert(InfInt(LONG_LONG_MAX) == LONG_LONG_MAX);
+		assert(InfInt(LONG_LONG_MIN).toLongLong() == LONG_LONG_MIN);
+		assert(InfInt(LONG_LONG_MAX).toLongLong() == LONG_LONG_MAX);
+
+		assert(InfInt(0U) == 0U);
+		assert(InfInt(UINT_MAX) == UINT_MAX);
+		assert(InfInt(0U).toUnsignedInt() == 0U);
+		assert(InfInt(UINT_MAX).toUnsignedInt() == UINT_MAX);
+
+		assert(InfInt(0UL) == 0UL);
+		assert(InfInt(ULONG_MAX) == ULONG_MAX);
+		assert(InfInt(0UL).toUnsignedLong() == 0UL);
+		assert(InfInt(ULONG_MAX).toUnsignedLong() == ULONG_MAX);
+
+		assert(InfInt(0ULL) == 0ULL);
+		assert(InfInt(ULONG_LONG_MAX) == ULONG_LONG_MAX);
+		assert(InfInt(0ULL).toUnsignedLongLong() == 0ULL);
+		assert(InfInt(ULONG_LONG_MAX).toUnsignedLongLong() == ULONG_LONG_MAX);
+	}
 	for (int i = 0; i < 100; ++i)
 	{
 		InfInt i1, i2;
@@ -56,7 +89,7 @@ void testInfInteger()
 		}
 		{
 			InfInt root = myint1.intSqrt();
-			InfInt rootPlusOne = root + InfInt::one;
+			InfInt rootPlusOne = root + 1;
 			assert(root*root <= myint1 && myint1 <= rootPlusOne*rootPlusOne);
 			assert((myint1*myint1).intSqrt() == myint1);
 			assert((myint1/myint2) * myint2 + (myint1%myint2) == myint1);

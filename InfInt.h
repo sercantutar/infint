@@ -221,6 +221,13 @@ inline InfInt::InfInt(const std::string& s)
 
 inline InfInt::InfInt(int l) : pos(l >= 0)
 {
+	bool subtractOne = false;
+	if (l == INT_MIN)
+	{
+		subtractOne = true;
+		++l;
+	}
+
     if (!pos)
     {
         l = -l;
@@ -231,11 +238,23 @@ inline InfInt::InfInt(int l) : pos(l >= 0)
         val.push_back((ELEM_TYPE) dt.rem);
         l = dt.quot;
     } while (l > 0);
+
+	if (subtractOne)
+	{
+		--*this;
+	}
 }
 
 inline InfInt::InfInt(long l) : pos(l >= 0)
 {
-    if (!pos)
+	bool subtractOne = false;
+	if (l == LONG_MIN)
+	{
+		subtractOne = true;
+		++l;
+	}
+
+	if (!pos)
     {
         l = -l;
     }
@@ -245,11 +264,23 @@ inline InfInt::InfInt(long l) : pos(l >= 0)
         val.push_back((ELEM_TYPE) dt.rem);
         l = dt.quot;
     } while (l > 0);
+
+	if (subtractOne)
+	{
+		--*this;
+	}
 }
 
 inline InfInt::InfInt(long long l) : pos(l >= 0)
 {
-    if (!pos)
+	bool subtractOne = false;
+	if (l == LONG_LONG_MIN)
+	{
+		subtractOne = true;
+		++l;
+	}
+
+	if (!pos)
     {
         l = -l;
     }
@@ -264,6 +295,11 @@ inline InfInt::InfInt(long long l) : pos(l >= 0)
         l = l / BASE;
 #endif
     } while (l > 0);
+
+	if (subtractOne)
+	{
+		--*this;
+	}
 }
 
 inline InfInt::InfInt(unsigned int l) : pos(true)
@@ -307,7 +343,14 @@ inline const InfInt& InfInt::operator=(const std::string& s)
 
 inline const InfInt& InfInt::operator=(int l)
 {
-    pos = l >= 0;
+	bool subtractOne = false;
+	if (l == INT_MIN)
+	{
+		subtractOne = true;
+		++l;
+	}
+
+	pos = l >= 0;
     val.clear();
     if (!pos)
     {
@@ -319,12 +362,20 @@ inline const InfInt& InfInt::operator=(int l)
         val.push_back((ELEM_TYPE) dt.rem);
         l = dt.quot;
     } while (l > 0);
-    return *this;
+
+	return subtractOne ? --*this : *this;
 }
 
 inline const InfInt& InfInt::operator=(long l)
 {
-    pos = l >= 0;
+	bool subtractOne = false;
+	if (l == LONG_MIN)
+	{
+		subtractOne = true;
+		++l;
+	}
+
+	pos = l >= 0;
     val.clear();
     if (!pos)
     {
@@ -336,12 +387,20 @@ inline const InfInt& InfInt::operator=(long l)
         val.push_back((ELEM_TYPE) dt.rem);
         l = dt.quot;
     } while (l > 0);
-    return *this;
+
+	return subtractOne ? --*this : *this;
 }
 
 inline const InfInt& InfInt::operator=(long long l)
 {
-    pos = l >= 0;
+	bool subtractOne = false;
+	if (l == LONG_LONG_MIN)
+	{
+		subtractOne = true;
+		++l;
+	}
+
+	pos = l >= 0;
     val.clear();
     if (!pos)
     {
@@ -358,7 +417,8 @@ inline const InfInt& InfInt::operator=(long long l)
         l = l / BASE;
 #endif
     } while (l > 0);
-    return *this;
+
+	return subtractOne ? --*this : *this;
 }
 
 inline const InfInt& InfInt::operator=(unsigned int l)
@@ -464,7 +524,7 @@ inline const InfInt& InfInt::operator*=(const InfInt& rhs)
 
 inline const InfInt& InfInt::operator/=(const InfInt& rhs)
 {
-    if (rhs == zero)
+    if (rhs == 0)
     {
 #ifdef INFINT_USE_EXCEPTIONS
         throw InfIntException("division by zero");
@@ -493,13 +553,13 @@ inline const InfInt& InfInt::operator/=(const InfInt& rhs)
 
 inline const InfInt& InfInt::operator%=(const InfInt& rhs)
 {
-    if (rhs == zero)
+    if (rhs == 0)
     {
 #ifdef INFINT_USE_EXCEPTIONS
         throw InfIntException("division by zero");
 #else
         std::cerr << "Division by zero!" << std::endl;
-        return zero;
+		return *this;
 #endif
     }
     InfInt D = (rhs.pos ? rhs : -rhs), N = (pos ? *this : -*this);
@@ -606,13 +666,13 @@ inline InfInt InfInt::operator*(const InfInt& rhs) const
 
 inline InfInt InfInt::operator/(const InfInt& rhs) const
 {//PROFILED_SCOPE
-    if (rhs == zero)
+    if (rhs == 0)
     {
 #ifdef INFINT_USE_EXCEPTIONS
         throw InfIntException("division by zero");
 #else
         std::cerr << "Division by zero!" << std::endl;
-        return zero;
+        return 0;
 #endif
     }
     InfInt Q, R, D = (rhs.pos ? rhs : -rhs), N = (pos ? *this : -*this);
@@ -633,13 +693,13 @@ inline InfInt InfInt::operator/(const InfInt& rhs) const
 
 inline InfInt InfInt::operator%(const InfInt& rhs) const
 {//PROFILED_SCOPE
-    if (rhs == zero)
+    if (rhs == 0)
     {
 #ifdef INFINT_USE_EXCEPTIONS
         throw InfIntException("division by zero");
 #else
         std::cerr << "Division by zero!" << std::endl;
-        return zero;
+        return 0;
 #endif
     }
     InfInt R, D = (rhs.pos ? rhs : -rhs), N = (pos ? *this : -*this);
@@ -845,13 +905,13 @@ inline void InfInt::optimizeSqrtSearchBounds(InfInt& lo, InfInt& hi) const
 
 inline InfInt InfInt::intSqrt() const
 {//PROFILED_SCOPE
-    if (*this <= zero)
+    if (*this <= 0)
     {
 #ifdef INFINT_USE_EXCEPTIONS
         throw InfIntException("intSqrt called for non-positive integer");
 #else
         std::cerr << "intSqrt called for non-positive integer: " << *this << std::endl;
-        return zero;
+        return 0;
 #endif
     }
     InfInt hi = *this / 2 + 1, lo = 0, mid, mid2;
