@@ -126,11 +126,6 @@ class InfInt
     friend std::istream& operator>>(std::istream &s, InfInt &val);
 
 public:
-    /* some constants */
-    static const InfInt zero;
-    static const InfInt one;
-    static const InfInt two;
-
     /* constructors */
     InfInt();
     InfInt(const char* c);
@@ -218,10 +213,6 @@ private:
     std::vector<ELEM_TYPE> val; // number with base FACTOR
     bool pos; // true if number is positive
 };
-
-const InfInt InfInt::zero = 0;
-const InfInt InfInt::one = 1;
-const InfInt InfInt::two = 2;
 
 inline InfInt::InfInt() : pos(true)
 {
@@ -846,7 +837,7 @@ inline bool InfInt::operator>=(const InfInt& rhs) const
 
 inline void InfInt::optimizeSqrtSearchBounds(InfInt& lo, InfInt& hi) const
 {//PROFILED_SCOPE
-    InfInt hdn = one;
+    InfInt hdn = 1;
     for (int i = (int) this->numberOfDigits() / 2; i >= 2; --i)
     {
         hdn *= 10;
@@ -873,11 +864,11 @@ inline InfInt InfInt::intSqrt() const
         return zero;
 #endif
     }
-    InfInt hi = *this / two + one, lo = zero, mid, mid2;
+    InfInt hi = *this / 2 + 1, lo = 0, mid, mid2;
     optimizeSqrtSearchBounds(lo, hi);
     do
     {
-        mid = (hi + lo) / two; // 8 factor
+        mid = (hi + lo) / 2; // 8 factor
         mid2 = mid * mid; // 1 factor
         if (mid2 == *this)
         {
@@ -892,7 +883,7 @@ inline InfInt InfInt::intSqrt() const
         {
             hi = mid;
         }
-    } while (lo < hi - one && mid2 != *this);
+    } while (lo < hi - 1 && mid2 != *this);
     return lo;
 }
 
