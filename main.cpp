@@ -1,3 +1,5 @@
+#define USE_PROFINY
+#define PROFINY_FLAT_PROFILER
 #include "InfInt.h"
 
 #include <assert.h>
@@ -130,14 +132,16 @@ void testInfInteger()
     assert(InfInt(7).intSqrt() == 2);
     assert(InfInt(8).intSqrt() == 2);
     assert(InfInt(9).intSqrt() == 3);
+
+    std::cout << "DONE TESTING!" << std::endl;
 }
 
 int main(int argc, const char * argv[])
-{//PROFILED_SCOPE
+{
+    PROFINY_SCOPE
     testInfInteger();
-    //std::cout << fib(100000) << std::endl;
-    //std::cout << fact(10000) << std::endl;
+    std::cout << fib(10000) << std::endl;
+    std::cout << fact(1000) << std::endl;
 
-    //atexit(Profiler::print);
     return 0;
 }
