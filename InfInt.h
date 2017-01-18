@@ -52,41 +52,21 @@
 #ifdef _WIN32
 #define LONG_LONG_MIN LLONG_MIN
 #define LONG_LONG_MAX LLONG_MAX
-#define ULONG_LONG_MIN ULLONG_MIN
 #define ULONG_LONG_MAX ULLONG_MAX
 #endif
 
 //#define INFINT_USE_EXCEPTIONS
-//#define INFINT_USE_SHORT_BASE
 
 #ifdef INFINT_USE_EXCEPTIONS
 #include <exception>
 #endif
 
-//inline bool check_pos(int n)
-//{
-//    return n >= 0;
-//}
-//inline bool check_neg(int n)
-//{
-//    return n <= 0;
-//}
-
-#ifdef INFINT_USE_SHORT_BASE // uses 10^4 (short) as the base
-typedef short ELEM_TYPE;
-typedef int PRODUCT_TYPE;
-static const ELEM_TYPE BASE = 10000;
-static const ELEM_TYPE UPPER_BOUND = 9999;
-static const ELEM_TYPE DIGIT_COUNT = 4;
-static const int powersOfTen[] = { 1, 10, 100, 1000};
-#else // uses 10^9 (int) as the base
 typedef int ELEM_TYPE;
 typedef long long PRODUCT_TYPE;
 static const ELEM_TYPE BASE = 1000000000;
 static const ELEM_TYPE UPPER_BOUND = 999999999;
 static const ELEM_TYPE DIGIT_COUNT = 9;
 static const int powersOfTen[] = { 1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000 };
-#endif
 
 #ifdef INFINT_USE_EXCEPTIONS
 class InfIntException: public std::exception
@@ -298,14 +278,9 @@ inline InfInt::InfInt(long long l) : pos(l >= 0)
     }
     do
     {
-#ifndef _WIN32
         lldiv_t dt = lldiv(l, BASE);
         val.push_back((ELEM_TYPE) dt.rem);
         l = dt.quot;
-#else
-        val.push_back((ELEM_TYPE) (l % BASE));
-        l = l / BASE;
-#endif
     } while (l > 0);
 
     if (subtractOne)
@@ -433,14 +408,9 @@ inline const InfInt& InfInt::operator=(long long l)
     }
     do
     {
-#ifndef _WIN32
         lldiv_t dt = lldiv(l, BASE);
         val.push_back((ELEM_TYPE) dt.rem);
         l = dt.quot;
-#else
-        val.push_back((ELEM_TYPE) (l % BASE));
-        l = l / BASE;
-#endif
     } while (l > 0);
 
     return subtractOne ? --*this : *this;
@@ -583,8 +553,8 @@ inline const InfInt& InfInt::operator/=(const InfInt& rhs)
     val.resize(N.val.size(), 0);
     for (int i = (int) N.val.size() - 1; i >= 0; --i)
     {
-        R.val.insert(R.val.begin(), (ELEM_TYPE) 0);
-        R.val[0] = N.val[i];
+        // TODO: insert ???
+        R.val.insert(R.val.begin(), N.val[i]);
         R.correct(true);
         ELEM_TYPE cnt = dInR(R, D);
         R -= D * cnt;
@@ -612,8 +582,8 @@ inline const InfInt& InfInt::operator%=(const InfInt& rhs)
     val.clear();
     for (int i = (int) N.val.size() - 1; i >= 0; --i)
     {
-        val.insert(val.begin(), (ELEM_TYPE) 0);
-        val[0] = N.val[i];
+        // TODO: insert ???
+        val.insert(val.begin(), N.val[i]);
         correct(true);
         *this -= D * dInR(*this, D);
     }
@@ -676,7 +646,6 @@ inline InfInt InfInt::operator*(const InfInt& rhs) const
     size_t digit = 0;
     for (;; ++digit)
     {
-        PROFINY_SCOPE
         //result.val[digit] = (ELEM_TYPE) (carry % BASE);
         //carry /= BASE;
 
@@ -687,11 +656,9 @@ inline InfInt InfInt::operator*(const InfInt& rhs) const
         bool found = false;
         for (size_t i = digit < rhs.val.size() ? 0 : digit - rhs.val.size() + 1; i < val.size() && i <= digit; ++i)
         {
-            PROFINY_SCOPE
             PRODUCT_TYPE pval = result.val[digit] + val[i] * (PRODUCT_TYPE) rhs.val[digit - i];
             if (pval >= BASE || pval <= -BASE)
             {
-                PROFINY_SCOPE
                 //carry += pval / BASE;
                 //pval %= BASE;
 
@@ -704,15 +671,17 @@ inline InfInt InfInt::operator*(const InfInt& rhs) const
         }
         if (!found)
         {
-            PROFINY_SCOPE
             break;
         }
     }
     for (; carry > 0; ++digit)
     {
-        PROFINY_SCOPE
-        result.val[digit] = (ELEM_TYPE) (carry % BASE);
-        carry /= BASE;
+        //result.val[digit] = (ELEM_TYPE)(carry % BASE);
+        //carry /= BASE;
+
+        lldiv_t dt = lldiv(carry, BASE);
+        result.val[digit] = (ELEM_TYPE) dt.rem;
+        carry = dt.quot;
     }
     result.correct();
     result.pos = (result.val.size() == 1 && result.val[0] == 0) ? true : (pos == rhs.pos);
@@ -735,9 +704,8 @@ inline InfInt InfInt::operator/(const InfInt& rhs) const
     Q.val.resize(N.val.size(), 0);
     for (int i = (int) N.val.size() - 1; i >= 0; --i)
     {
-        PROFINY_SCOPE
-        R.val.insert(R.val.begin(), (ELEM_TYPE) 0);
-        R.val[0] = N.val[i];
+        // TODO: insert ???
+        R.val.insert(R.val.begin(), N.val[i]);
         R.correct(true);
         ELEM_TYPE cnt = dInR(R, D);
         R -= D * cnt;
@@ -763,8 +731,8 @@ inline InfInt InfInt::operator%(const InfInt& rhs) const
     InfInt R, D = (rhs.pos ? rhs : -rhs), N = (pos ? *this : -*this);
     for (int i = (int) N.val.size() - 1; i >= 0; --i)
     {
-        R.val.insert(R.val.begin(), (ELEM_TYPE) 0);
-        R.val[0] = N.val[i];
+        // TODO: insert ???
+        R.val.insert(R.val.begin(), N.val[i]);
         R.correct(true);
         R -= D * dInR(R, D);
     }
@@ -1022,13 +990,9 @@ inline char InfInt::digitAt(size_t i) const
 inline size_t InfInt::numberOfDigits() const
 {
     PROFINY_SCOPE
-    return (val.size() - 1) * DIGIT_COUNT
-#ifdef INFINT_USE_SHORT_BASE
-    + (val.back() > 999 ? 4 : (val.back() > 99 ? 3 : (val.back() > 9 ? 2 : 1)));
-#else
-    + (val.back() > 99999999 ? 9 : (val.back() > 9999999 ? 8 : (val.back() > 999999 ? 7 : (val.back() > 99999 ? 6 :
-                                                                                           (val.back() > 9999 ? 5 : (val.back() > 999 ? 4 : (val.back() > 99 ? 3 : (val.back() > 9 ? 2 : 1))))))));
-#endif
+    return (val.size() - 1) * DIGIT_COUNT +
+        (val.back() > 99999999 ? 9 : (val.back() > 9999999 ? 8 : (val.back() > 999999 ? 7 : (val.back() > 99999 ? 6 :
+        (val.back() > 9999 ? 5 : (val.back() > 999 ? 4 : (val.back() > 99 ? 3 : (val.back() > 9 ? 2 : 1))))))));
 }
 
 inline std::string InfInt::toString() const
@@ -1049,11 +1013,13 @@ inline int InfInt::toInt() const
 {
     PROFINY_SCOPE
     if (*this > INT_MAX || *this < INT_MIN)
+    {
 #ifdef INFINT_USE_EXCEPTIONS
         throw InfIntException("out of bounds");
 #else
-    std::cerr << "Out of INT bounds: " << *this << std::endl;
+        std::cerr << "Out of INT bounds: " << *this << std::endl;
 #endif
+    }
     int result = 0;
     for (int i = (int) val.size() - 1; i >= 0; --i)
     {
@@ -1066,11 +1032,13 @@ inline long InfInt::toLong() const
 {
     PROFINY_SCOPE
     if (*this > LONG_MAX || *this < LONG_MIN)
+    {
 #ifdef INFINT_USE_EXCEPTIONS
         throw InfIntException("out of bounds");
 #else
-    std::cerr << "Out of LONG bounds: " << *this << std::endl;
+        std::cerr << "Out of LONG bounds: " << *this << std::endl;
 #endif
+    }
     long result = 0;
     for (int i = (int) val.size() - 1; i >= 0; --i)
     {
@@ -1083,11 +1051,13 @@ inline long long InfInt::toLongLong() const
 {
     PROFINY_SCOPE
     if (*this > LONG_LONG_MAX || *this < LONG_LONG_MIN)
+    {
 #ifdef INFINT_USE_EXCEPTIONS
         throw InfIntException("out of bounds");
 #else
-    std::cerr << "Out of LLONG bounds: " << *this << std::endl;
+        std::cerr << "Out of LLONG bounds: " << *this << std::endl;
 #endif
+    }
     long long result = 0;
     for (int i = (int) val.size() - 1; i >= 0; --i)
     {
@@ -1100,11 +1070,13 @@ inline unsigned int InfInt::toUnsignedInt() const
 {
     PROFINY_SCOPE
     if (!pos || *this > UINT_MAX)
+    {
 #ifdef INFINT_USE_EXCEPTIONS
         throw InfIntException("out of bounds");
 #else
-    std::cerr << "Out of UINT bounds: " << *this << std::endl;
+        std::cerr << "Out of UINT bounds: " << *this << std::endl;
 #endif
+    }
     unsigned int result = 0;
     for (int i = (int) val.size() - 1; i >= 0; --i)
     {
@@ -1117,11 +1089,13 @@ inline unsigned long InfInt::toUnsignedLong() const
 {
     PROFINY_SCOPE
     if (!pos || *this > ULONG_MAX)
+    {
 #ifdef INFINT_USE_EXCEPTIONS
         throw InfIntException("out of bounds");
 #else
-    std::cerr << "Out of ULONG bounds: " << *this << std::endl;
+        std::cerr << "Out of ULONG bounds: " << *this << std::endl;
 #endif
+    }
     unsigned long result = 0;
     for (int i = (int) val.size() - 1; i >= 0; --i)
     {
@@ -1134,11 +1108,13 @@ inline unsigned long long InfInt::toUnsignedLongLong() const
 {
     PROFINY_SCOPE
     if (!pos || *this > ULONG_LONG_MAX)
+    {
 #ifdef INFINT_USE_EXCEPTIONS
         throw InfIntException("out of bounds");
 #else
-    std::cerr << "Out of ULLONG bounds: " << *this << std::endl;
+        std::cerr << "Out of ULLONG bounds: " << *this << std::endl;
 #endif
+    }
     unsigned long long result = 0;
     for (int i = (int) val.size() - 1; i >= 0; --i)
     {
@@ -1154,17 +1130,14 @@ inline void InfInt::truncateToBase()
     {
         if (val[i] >= BASE || val[i] <= -BASE)
         {
-            PROFINY_SCOPE
             div_t dt = div(val[i], BASE);
             val[i] = dt.rem;
             if (i + 1 >= val.size())
             {
-                PROFINY_SCOPE
                 val.push_back(dt.quot);
             }
             else
             {
-                PROFINY_SCOPE
                 val[i + 1] += dt.quot;
             }
         }
@@ -1305,13 +1278,11 @@ inline ELEM_TYPE InfInt::dInR(const InfInt& R, const InfInt& D)
 {
     PROFINY_SCOPE
     ELEM_TYPE min = 0, max = UPPER_BOUND;
-    while (max - min > 0)
+    while (max > min)
     {
         ELEM_TYPE avg = max + min;
         div_t dt = div(avg, 2);
         avg = dt.rem ? (dt.quot + 1) : dt.quot;
-        //ELEM_TYPE havg = avg / 2;
-        //avg = (avg - havg * 2) ? (havg + 1) : havg;
         InfInt prod = D * avg;
         if (R == prod)
         {
@@ -1341,8 +1312,12 @@ inline void InfInt::multiplyByDigit(ELEM_TYPE factor, std::vector<ELEM_TYPE>& va
             //carry = (ELEM_TYPE) (pval / BASE);
             //pval %= BASE;
 
-            carry = (ELEM_TYPE) (pval / BASE);
-            pval -= carry * BASE;
+            //carry = (ELEM_TYPE) (pval / BASE);
+            //pval -= carry * BASE;
+
+            lldiv_t dt = lldiv(pval, BASE);
+            carry = (ELEM_TYPE) dt.quot;
+            pval = dt.rem;
         }
         else
         {

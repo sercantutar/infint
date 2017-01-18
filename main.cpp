@@ -1,6 +1,8 @@
-#define USE_PROFINY
-#define PROFINY_FLAT_PROFILER
+//#define USE_PROFINY
 #include "InfInt.h"
+
+#define PROFINY_CALL_GRAPH_PROFILER
+#include "..\profiny\Profiny.h"
 
 #include <assert.h>
 #include <limits.h>
@@ -32,9 +34,7 @@ void testInfInteger()
 {
     InfInt myint1 = "15432154865413186646848435184100510168404641560358";
     InfInt myint2 = 156341300544608LL;
-    std::cout << "SIZES: " << myint1.size() << " " << myint2.size() << std::endl;
-    //myint2.toInt(); myint2.tol(); myint2.toll();
-    //myint2.toui(); myint2.toUnsignedLong(); myint2.toUnsignedLongLong();
+    //std::cout << "SIZES: " << myint1.size() << " " << myint2.size() << std::endl;
     {
         assert(InfInt(INT_MIN) == INT_MIN);
         assert(InfInt(INT_MAX) == INT_MAX);
@@ -66,7 +66,7 @@ void testInfInteger()
         assert(InfInt(0ULL).toUnsignedLongLong() == 0ULL);
         assert(InfInt(ULONG_LONG_MAX).toUnsignedLongLong() == ULONG_LONG_MAX);
     }
-    for (int i = 0; i < 100; ++i)
+    for (int i = 0; i < 10000; ++i)
     {
         InfInt i1, i2;
         {
@@ -132,16 +132,16 @@ void testInfInteger()
     assert(InfInt(7).intSqrt() == 2);
     assert(InfInt(8).intSqrt() == 2);
     assert(InfInt(9).intSqrt() == 3);
-
-    std::cout << "DONE TESTING!" << std::endl;
 }
 
 int main(int argc, const char * argv[])
 {
     PROFINY_SCOPE
     testInfInteger();
-    std::cout << fib(10000) << std::endl;
-    std::cout << fact(1000) << std::endl;
+    //fib(200000);
+    //fact(40000);
+    //std::cout << fib(100000) << std::endl;
+    //std::cout << fact(10000) << std::endl;
 
     return 0;
 }
