@@ -137,11 +137,66 @@ void testInfInteger()
 int main(int argc, const char * argv[])
 {
     PROFINY_SCOPE
-    testInfInteger();
-    fib(200000);
-    fact(40000);
+    //testInfInteger();
+    //fib(200000);
+    //fact(40000);
     //std::cout << fib(100000) << std::endl;
     //std::cout << fact(10000) << std::endl;
+
+    InfInt a = -1;
+    assert(a++ == -1); assert(a++ == 0); assert(a == 1);
+    assert(a-- == 1); assert(a-- == 0); assert(a == -1);
+    assert(++a == 0); assert(++a == 1); assert(a == 1);
+    assert(--a == 0); assert(--a == -1); assert(a == -1);
+
+    a = UPPER_BOUND;
+    assert(a++ == UPPER_BOUND); assert(a == UPPER_BOUND + 1);
+    assert(a-- == UPPER_BOUND + 1); assert(a == UPPER_BOUND);
+    assert(++a == UPPER_BOUND + 1); assert(a == UPPER_BOUND + 1);
+    assert(--a == UPPER_BOUND); assert(a == UPPER_BOUND);
+
+    a = -UPPER_BOUND;
+    assert(a++ == -UPPER_BOUND); assert(a == -UPPER_BOUND + 1);
+    assert(a-- == -UPPER_BOUND + 1); assert(a == -UPPER_BOUND);
+    assert(++a == -UPPER_BOUND + 1); assert(a == -UPPER_BOUND + 1);
+    assert(--a == -UPPER_BOUND); assert(a == -UPPER_BOUND);
+
+    a = UPPER_BOUND;
+    assert((a += UPPER_BOUND) == 2 * UPPER_BOUND); assert(a == 2 * UPPER_BOUND);
+    assert((a += -UPPER_BOUND) == UPPER_BOUND); assert(a == UPPER_BOUND);
+    assert((a -= UPPER_BOUND) == 0); assert(a == 0);
+    assert((a -= -UPPER_BOUND) == UPPER_BOUND); assert(a == UPPER_BOUND);
+
+    a = -UPPER_BOUND;
+    assert((a -= UPPER_BOUND) == 2 * -UPPER_BOUND); assert(a == 2 * -UPPER_BOUND);
+    assert((a -= -UPPER_BOUND) == -UPPER_BOUND); assert(a == -UPPER_BOUND);
+    assert((a += UPPER_BOUND) == 0); assert(a == 0);
+    assert((a += -UPPER_BOUND) == -UPPER_BOUND); assert(a == -UPPER_BOUND);
+
+    a = UPPER_BOUND;
+    assert((a = a + UPPER_BOUND) == 2 * UPPER_BOUND); assert(a == 2 * UPPER_BOUND);
+    assert((a = a + -UPPER_BOUND) == UPPER_BOUND); assert(a == UPPER_BOUND);
+    assert((a = a - UPPER_BOUND) == 0); assert(a == 0);
+    assert((a = a - -UPPER_BOUND) == UPPER_BOUND); assert(a == UPPER_BOUND);
+
+    a = -UPPER_BOUND;
+    assert((a = a - UPPER_BOUND) == 2 * -UPPER_BOUND); assert(a == 2 * -UPPER_BOUND);
+    assert((a = a - -UPPER_BOUND) == -UPPER_BOUND); assert(a == -UPPER_BOUND);
+    assert((a = a + UPPER_BOUND) == 0); assert(a == 0);
+    assert((a = a + -UPPER_BOUND) == -UPPER_BOUND); assert(a == -UPPER_BOUND);
+
+    a = UPPER_BOUND;
+    assert((a *= UPPER_BOUND) == UPPER_BOUND * (long long) UPPER_BOUND); assert(a == UPPER_BOUND * (long long) UPPER_BOUND);
+    assert((a /= UPPER_BOUND) == UPPER_BOUND); assert(a == UPPER_BOUND);
+    assert((a *= -UPPER_BOUND) == -UPPER_BOUND * (long long) UPPER_BOUND); assert(a == -UPPER_BOUND * (long long) UPPER_BOUND);
+    assert((a /= -UPPER_BOUND) == UPPER_BOUND); assert(a == UPPER_BOUND);
+
+    a = UPPER_BOUND;
+    assert((a = a * UPPER_BOUND) == UPPER_BOUND * (long long) UPPER_BOUND); assert(a == UPPER_BOUND * (long long) UPPER_BOUND);
+    assert((a = a / UPPER_BOUND) == UPPER_BOUND); assert(a == UPPER_BOUND);
+    assert((a = a * -UPPER_BOUND) == -UPPER_BOUND * (long long) UPPER_BOUND); assert(a == -UPPER_BOUND * (long long) UPPER_BOUND);
+    assert((a = a / -UPPER_BOUND) == UPPER_BOUND); assert(a == UPPER_BOUND);
+
 
     return 0;
 }
