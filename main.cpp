@@ -5,8 +5,8 @@
 #include "..\profiny\Profiny.h"
 
 #include <assert.h>
-#include <limits.h>
-#include <iostream>
+//#include <limits.h>
+//#include <iostream>
 
 InfInt fib(InfInt n)
 {
@@ -66,7 +66,7 @@ void testInfInteger()
         assert(InfInt(0ULL).toUnsignedLongLong() == 0ULL);
         assert(InfInt(ULONG_LONG_MAX).toUnsignedLongLong() == ULONG_LONG_MAX);
     }
-    for (int i = 0; i < 10000; ++i)
+    for (int i = 0; i < 5000; ++i)
     {
         InfInt i1, i2;
         {
@@ -138,8 +138,8 @@ int main(int argc, const char * argv[])
 {
     PROFINY_SCOPE
     testInfInteger();
-    //fib(200000);
-    //fact(40000);
+    fib(200000);
+    fact(40000);
     //std::cout << fib(100000) << std::endl;
     //std::cout << fact(10000) << std::endl;
 

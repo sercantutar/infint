@@ -40,22 +40,14 @@
 #include <sstream>
 #include <iomanip>
 
-#include <limits.h>
-#include <stdlib.h>
-
-#ifdef USE_PROFINY
-#include "..\profiny\Profiny.h"
-#else
-#define PROFINY_SCOPE
-#endif
+//#include <limits.h>
+//#include <stdlib.h>
 
 #ifdef _WIN32
 #define LONG_LONG_MIN LLONG_MIN
 #define LONG_LONG_MAX LLONG_MAX
 #define ULONG_LONG_MAX ULLONG_MAX
 #endif
-
-//#define INFINT_USE_EXCEPTIONS
 
 #ifdef INFINT_USE_EXCEPTIONS
 #include <exception>
@@ -93,6 +85,30 @@ const char* InfIntException::what() const throw ()
     return txt.c_str();
 }
 #endif
+
+inline static div_t my_div(int num, int denom)
+{
+    div_t result;
+    result.quot = num / denom;
+    result.rem = num - denom * result.quot;
+    return result;
+}
+
+inline static ldiv_t my_ldiv(long num, long denom)
+{
+    ldiv_t result;
+    result.quot = num / denom;
+    result.rem = num - denom * result.quot;
+    return result;
+}
+
+inline static lldiv_t my_lldiv(long long num, long long denom)
+{
+    lldiv_t result;
+    result.quot = num / denom;
+    result.rem = num - denom * result.quot;
+    return result;
+}
 
 class InfInt
 {
@@ -192,25 +208,25 @@ private:
 
 inline InfInt::InfInt() : pos(true)
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     val.push_back((ELEM_TYPE) 0);
 }
 
 inline InfInt::InfInt(const char* c)
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     fromString(c);
 }
 
 inline InfInt::InfInt(const std::string& s)
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     fromString(s);
 }
 
 inline InfInt::InfInt(int l) : pos(l >= 0)
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     bool subtractOne = false;
     if (l == INT_MIN)
     {
@@ -224,7 +240,7 @@ inline InfInt::InfInt(int l) : pos(l >= 0)
     }
     do
     {
-        div_t dt = div(l, BASE);
+        div_t dt = my_div(l, BASE);
         val.push_back((ELEM_TYPE) dt.rem);
         l = dt.quot;
     } while (l > 0);
@@ -237,7 +253,7 @@ inline InfInt::InfInt(int l) : pos(l >= 0)
 
 inline InfInt::InfInt(long l) : pos(l >= 0)
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     bool subtractOne = false;
     if (l == LONG_MIN)
     {
@@ -251,7 +267,7 @@ inline InfInt::InfInt(long l) : pos(l >= 0)
     }
     do
     {
-        ldiv_t dt = ldiv(l, BASE);
+        ldiv_t dt = my_ldiv(l, BASE);
         val.push_back((ELEM_TYPE) dt.rem);
         l = dt.quot;
     } while (l > 0);
@@ -264,7 +280,7 @@ inline InfInt::InfInt(long l) : pos(l >= 0)
 
 inline InfInt::InfInt(long long l) : pos(l >= 0)
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     bool subtractOne = false;
     if (l == LONG_LONG_MIN)
     {
@@ -278,7 +294,7 @@ inline InfInt::InfInt(long long l) : pos(l >= 0)
     }
     do
     {
-        lldiv_t dt = lldiv(l, BASE);
+        lldiv_t dt = my_lldiv(l, BASE);
         val.push_back((ELEM_TYPE) dt.rem);
         l = dt.quot;
     } while (l > 0);
@@ -291,7 +307,7 @@ inline InfInt::InfInt(long long l) : pos(l >= 0)
 
 inline InfInt::InfInt(unsigned int l) : pos(true)
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     do
     {
         val.push_back((ELEM_TYPE) (l % BASE));
@@ -301,7 +317,7 @@ inline InfInt::InfInt(unsigned int l) : pos(true)
 
 inline InfInt::InfInt(unsigned long l) : pos(true)
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     do
     {
         val.push_back((ELEM_TYPE) (l % BASE));
@@ -311,7 +327,7 @@ inline InfInt::InfInt(unsigned long l) : pos(true)
 
 inline InfInt::InfInt(unsigned long long l) : pos(true)
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     do
     {
         val.push_back((ELEM_TYPE) (l % BASE));
@@ -321,26 +337,26 @@ inline InfInt::InfInt(unsigned long long l) : pos(true)
 
 inline InfInt::InfInt(const InfInt& l) : pos(l.pos), val(l.val)
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
 }
 
 inline const InfInt& InfInt::operator=(const char* c)
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     fromString(c);
     return *this;
 }
 
 inline const InfInt& InfInt::operator=(const std::string& s)
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     fromString(s);
     return *this;
 }
 
 inline const InfInt& InfInt::operator=(int l)
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     bool subtractOne = false;
     if (l == INT_MIN)
     {
@@ -356,7 +372,7 @@ inline const InfInt& InfInt::operator=(int l)
     }
     do
     {
-        div_t dt = div(l, BASE);
+        div_t dt = my_div(l, BASE);
         val.push_back((ELEM_TYPE) dt.rem);
         l = dt.quot;
     } while (l > 0);
@@ -366,7 +382,7 @@ inline const InfInt& InfInt::operator=(int l)
 
 inline const InfInt& InfInt::operator=(long l)
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     bool subtractOne = false;
     if (l == LONG_MIN)
     {
@@ -382,7 +398,7 @@ inline const InfInt& InfInt::operator=(long l)
     }
     do
     {
-        ldiv_t dt = ldiv(l, BASE);
+        ldiv_t dt = my_ldiv(l, BASE);
         val.push_back((ELEM_TYPE) dt.rem);
         l = dt.quot;
     } while (l > 0);
@@ -392,7 +408,7 @@ inline const InfInt& InfInt::operator=(long l)
 
 inline const InfInt& InfInt::operator=(long long l)
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     bool subtractOne = false;
     if (l == LONG_LONG_MIN)
     {
@@ -408,7 +424,7 @@ inline const InfInt& InfInt::operator=(long long l)
     }
     do
     {
-        lldiv_t dt = lldiv(l, BASE);
+        lldiv_t dt = my_lldiv(l, BASE);
         val.push_back((ELEM_TYPE) dt.rem);
         l = dt.quot;
     } while (l > 0);
@@ -418,7 +434,7 @@ inline const InfInt& InfInt::operator=(long long l)
 
 inline const InfInt& InfInt::operator=(unsigned int l)
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     pos = true;
     val.clear();
     do
@@ -431,7 +447,7 @@ inline const InfInt& InfInt::operator=(unsigned int l)
 
 inline const InfInt& InfInt::operator=(unsigned long l)
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     pos = true;
     val.clear();
     do
@@ -444,7 +460,7 @@ inline const InfInt& InfInt::operator=(unsigned long l)
 
 inline const InfInt& InfInt::operator=(unsigned long long l)
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     pos = true;
     val.clear();
     do
@@ -457,7 +473,7 @@ inline const InfInt& InfInt::operator=(unsigned long long l)
 
 const InfInt& InfInt::operator=(const InfInt& l)
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     pos = l.pos;
     val = l.val;
     return *this;
@@ -465,7 +481,7 @@ const InfInt& InfInt::operator=(const InfInt& l)
 
 inline const InfInt& InfInt::operator++()
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     val[0] += (pos ? 1 : -1);
     this->correct(false, true);
     return *this;
@@ -473,7 +489,7 @@ inline const InfInt& InfInt::operator++()
 
 inline const InfInt& InfInt::operator--()
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     val[0] -= (pos ? 1 : -1);
     this->correct(false, true);
     return *this;
@@ -481,7 +497,7 @@ inline const InfInt& InfInt::operator--()
 
 inline InfInt InfInt::operator++(int)
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     InfInt result = *this;
     val[0] += (pos ? 1 : -1);
     this->correct(false, true);
@@ -490,7 +506,7 @@ inline InfInt InfInt::operator++(int)
 
 inline InfInt InfInt::operator--(int)
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     InfInt result = *this;
     val[0] -= (pos ? 1 : -1);
     this->correct(false, true);
@@ -499,7 +515,7 @@ inline InfInt InfInt::operator--(int)
 
 inline const InfInt& InfInt::operator+=(const InfInt& rhs)
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     if (rhs.val.size() > val.size())
     {
         val.resize(rhs.val.size(), 0);
@@ -514,7 +530,7 @@ inline const InfInt& InfInt::operator+=(const InfInt& rhs)
 
 inline const InfInt& InfInt::operator-=(const InfInt& rhs)
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     if (rhs.val.size() > val.size())
     {
         val.resize(rhs.val.size(), 0);
@@ -529,7 +545,7 @@ inline const InfInt& InfInt::operator-=(const InfInt& rhs)
 
 inline const InfInt& InfInt::operator*=(const InfInt& rhs)
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     // TODO: optimize (do not use operator*)
     *this = *this * rhs;
     return *this;
@@ -537,7 +553,7 @@ inline const InfInt& InfInt::operator*=(const InfInt& rhs)
 
 inline const InfInt& InfInt::operator/=(const InfInt& rhs)
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     if (rhs == 0)
     {
 #ifdef INFINT_USE_EXCEPTIONS
@@ -549,11 +565,9 @@ inline const InfInt& InfInt::operator/=(const InfInt& rhs)
     }
     InfInt R, D = (rhs.pos ? rhs : -rhs), N = (pos ? *this : -*this);
     bool oldpos = pos;
-    val.clear();
-    val.resize(N.val.size(), 0);
+    std::fill(val.begin(), val.end(), 0);
     for (int i = (int) N.val.size() - 1; i >= 0; --i)
     {
-        // TODO: insert ???
         R.val.insert(R.val.begin(), N.val[i]);
         R.correct(true);
         ELEM_TYPE cnt = dInR(R, D);
@@ -567,7 +581,7 @@ inline const InfInt& InfInt::operator/=(const InfInt& rhs)
 
 inline const InfInt& InfInt::operator%=(const InfInt& rhs)
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     if (rhs == 0)
     {
 #ifdef INFINT_USE_EXCEPTIONS
@@ -582,7 +596,6 @@ inline const InfInt& InfInt::operator%=(const InfInt& rhs)
     val.clear();
     for (int i = (int) N.val.size() - 1; i >= 0; --i)
     {
-        // TODO: insert ???
         val.insert(val.begin(), N.val[i]);
         correct(true);
         *this -= D * dInR(*this, D);
@@ -594,7 +607,7 @@ inline const InfInt& InfInt::operator%=(const InfInt& rhs)
 
 inline const InfInt& InfInt::operator*=(ELEM_TYPE rhs)
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     ELEM_TYPE factor = rhs < 0 ? -rhs : rhs;
     bool oldpos = pos;
     multiplyByDigit(factor, val);
@@ -605,7 +618,7 @@ inline const InfInt& InfInt::operator*=(ELEM_TYPE rhs)
 
 inline InfInt InfInt::operator-() const
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     InfInt result = *this;
     result.pos = !pos;
     return result;
@@ -613,7 +626,7 @@ inline InfInt InfInt::operator-() const
 
 inline InfInt InfInt::operator+(const InfInt& rhs) const
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     InfInt result;
     result.val.resize(val.size() > rhs.val.size() ? val.size() : rhs.val.size(), 0);
     for (size_t i = 0; i < val.size() || i < rhs.val.size(); ++i)
@@ -626,7 +639,7 @@ inline InfInt InfInt::operator+(const InfInt& rhs) const
 
 inline InfInt InfInt::operator-(const InfInt& rhs) const
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     InfInt result;
     result.val.resize(val.size() > rhs.val.size() ? val.size() : rhs.val.size(), 0);
     for (size_t i = 0; i < val.size() || i < rhs.val.size(); ++i)
@@ -639,19 +652,16 @@ inline InfInt InfInt::operator-(const InfInt& rhs) const
 
 inline InfInt InfInt::operator*(const InfInt& rhs) const
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     InfInt result;
     result.val.resize(val.size() + rhs.val.size(), 0);
     PRODUCT_TYPE carry = 0;
     size_t digit = 0;
     for (;; ++digit)
     {
-        //result.val[digit] = (ELEM_TYPE) (carry % BASE);
-        //carry /= BASE;
-
-        PRODUCT_TYPE oldcarry = carry;
-        carry /= BASE;
-        result.val[digit] = (ELEM_TYPE) (oldcarry - carry * BASE);
+        lldiv_t dt = my_lldiv(carry, BASE);
+        carry = dt.quot;
+        result.val[digit] = (ELEM_TYPE) dt.rem;
 
         bool found = false;
         for (size_t i = digit < rhs.val.size() ? 0 : digit - rhs.val.size() + 1; i < val.size() && i <= digit; ++i)
@@ -659,12 +669,9 @@ inline InfInt InfInt::operator*(const InfInt& rhs) const
             PRODUCT_TYPE pval = result.val[digit] + val[i] * (PRODUCT_TYPE) rhs.val[digit - i];
             if (pval >= BASE || pval <= -BASE)
             {
-                //carry += pval / BASE;
-                //pval %= BASE;
-
-                PRODUCT_TYPE quot = pval / BASE;
-                carry += quot;
-                pval -= quot * BASE;
+                lldiv_t dt = my_lldiv(pval, BASE);
+                carry += dt.quot;
+                pval = dt.rem;
             }
             result.val[digit] = (ELEM_TYPE) pval;
             found = true;
@@ -676,10 +683,7 @@ inline InfInt InfInt::operator*(const InfInt& rhs) const
     }
     for (; carry > 0; ++digit)
     {
-        //result.val[digit] = (ELEM_TYPE)(carry % BASE);
-        //carry /= BASE;
-
-        lldiv_t dt = lldiv(carry, BASE);
+        lldiv_t dt = my_lldiv(carry, BASE);
         result.val[digit] = (ELEM_TYPE) dt.rem;
         carry = dt.quot;
     }
@@ -690,7 +694,7 @@ inline InfInt InfInt::operator*(const InfInt& rhs) const
 
 inline InfInt InfInt::operator/(const InfInt& rhs) const
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     if (rhs == 0)
     {
 #ifdef INFINT_USE_EXCEPTIONS
@@ -704,7 +708,6 @@ inline InfInt InfInt::operator/(const InfInt& rhs) const
     Q.val.resize(N.val.size(), 0);
     for (int i = (int) N.val.size() - 1; i >= 0; --i)
     {
-        // TODO: insert ???
         R.val.insert(R.val.begin(), N.val[i]);
         R.correct(true);
         ELEM_TYPE cnt = dInR(R, D);
@@ -718,7 +721,7 @@ inline InfInt InfInt::operator/(const InfInt& rhs) const
 
 inline InfInt InfInt::operator%(const InfInt& rhs) const
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     if (rhs == 0)
     {
 #ifdef INFINT_USE_EXCEPTIONS
@@ -731,7 +734,6 @@ inline InfInt InfInt::operator%(const InfInt& rhs) const
     InfInt R, D = (rhs.pos ? rhs : -rhs), N = (pos ? *this : -*this);
     for (int i = (int) N.val.size() - 1; i >= 0; --i)
     {
-        // TODO: insert ???
         R.val.insert(R.val.begin(), N.val[i]);
         R.correct(true);
         R -= D * dInR(R, D);
@@ -743,7 +745,7 @@ inline InfInt InfInt::operator%(const InfInt& rhs) const
 
 inline InfInt InfInt::operator*(ELEM_TYPE rhs) const
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     InfInt result = *this;
     ELEM_TYPE factor = rhs < 0 ? -rhs : rhs;
     multiplyByDigit(factor, result.val);
@@ -754,7 +756,7 @@ inline InfInt InfInt::operator*(ELEM_TYPE rhs) const
 
 inline bool InfInt::operator==(const InfInt& rhs) const
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     if (pos != rhs.pos || val.size() != rhs.val.size())
     {
         return false;
@@ -771,7 +773,7 @@ inline bool InfInt::operator==(const InfInt& rhs) const
 
 inline bool InfInt::operator!=(const InfInt& rhs) const
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     if (pos != rhs.pos || val.size() != rhs.val.size())
     {
         return true;
@@ -788,7 +790,7 @@ inline bool InfInt::operator!=(const InfInt& rhs) const
 
 inline bool InfInt::operator<(const InfInt& rhs) const
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     if (pos && !rhs.pos)
     {
         return false;
@@ -821,7 +823,7 @@ inline bool InfInt::operator<(const InfInt& rhs) const
 
 inline bool InfInt::operator<=(const InfInt& rhs) const
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     if (pos && !rhs.pos)
     {
         return false;
@@ -854,7 +856,7 @@ inline bool InfInt::operator<=(const InfInt& rhs) const
 
 inline bool InfInt::operator>(const InfInt& rhs) const
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     if (pos && !rhs.pos)
     {
         return true;
@@ -887,7 +889,7 @@ inline bool InfInt::operator>(const InfInt& rhs) const
 
 inline bool InfInt::operator>=(const InfInt& rhs) const
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     if (pos && !rhs.pos)
     {
         return true;
@@ -920,7 +922,7 @@ inline bool InfInt::operator>=(const InfInt& rhs) const
 
 inline void InfInt::optimizeSqrtSearchBounds(InfInt& lo, InfInt& hi) const
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     InfInt hdn = 1;
     for (int i = (int) this->numberOfDigits() / 2; i >= 2; --i)
     {
@@ -939,7 +941,7 @@ inline void InfInt::optimizeSqrtSearchBounds(InfInt& lo, InfInt& hi) const
 
 inline InfInt InfInt::intSqrt() const
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     if (*this <= 0)
     {
 #ifdef INFINT_USE_EXCEPTIONS
@@ -974,7 +976,7 @@ inline InfInt InfInt::intSqrt() const
 
 inline char InfInt::digitAt(size_t i) const
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     if (numberOfDigits() <= i)
     {
 #ifdef INFINT_USE_EXCEPTIONS
@@ -989,7 +991,7 @@ inline char InfInt::digitAt(size_t i) const
 
 inline size_t InfInt::numberOfDigits() const
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     return (val.size() - 1) * DIGIT_COUNT +
         (val.back() > 99999999 ? 9 : (val.back() > 9999999 ? 8 : (val.back() > 999999 ? 7 : (val.back() > 99999 ? 6 :
         (val.back() > 9999 ? 5 : (val.back() > 999 ? 4 : (val.back() > 99 ? 3 : (val.back() > 9 ? 2 : 1))))))));
@@ -997,7 +999,7 @@ inline size_t InfInt::numberOfDigits() const
 
 inline std::string InfInt::toString() const
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     std::ostringstream oss;
     oss << *this;
     return oss.str();
@@ -1005,13 +1007,13 @@ inline std::string InfInt::toString() const
 
 inline size_t InfInt::size() const
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     return val.size() * sizeof(ELEM_TYPE) + sizeof(bool);
 }
 
 inline int InfInt::toInt() const
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     if (*this > INT_MAX || *this < INT_MIN)
     {
 #ifdef INFINT_USE_EXCEPTIONS
@@ -1030,7 +1032,7 @@ inline int InfInt::toInt() const
 
 inline long InfInt::toLong() const
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     if (*this > LONG_MAX || *this < LONG_MIN)
     {
 #ifdef INFINT_USE_EXCEPTIONS
@@ -1049,7 +1051,7 @@ inline long InfInt::toLong() const
 
 inline long long InfInt::toLongLong() const
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     if (*this > LONG_LONG_MAX || *this < LONG_LONG_MIN)
     {
 #ifdef INFINT_USE_EXCEPTIONS
@@ -1068,7 +1070,7 @@ inline long long InfInt::toLongLong() const
 
 inline unsigned int InfInt::toUnsignedInt() const
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     if (!pos || *this > UINT_MAX)
     {
 #ifdef INFINT_USE_EXCEPTIONS
@@ -1087,7 +1089,7 @@ inline unsigned int InfInt::toUnsignedInt() const
 
 inline unsigned long InfInt::toUnsignedLong() const
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     if (!pos || *this > ULONG_MAX)
     {
 #ifdef INFINT_USE_EXCEPTIONS
@@ -1106,7 +1108,7 @@ inline unsigned long InfInt::toUnsignedLong() const
 
 inline unsigned long long InfInt::toUnsignedLongLong() const
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     if (!pos || *this > ULONG_LONG_MAX)
     {
 #ifdef INFINT_USE_EXCEPTIONS
@@ -1125,12 +1127,12 @@ inline unsigned long long InfInt::toUnsignedLongLong() const
 
 inline void InfInt::truncateToBase()
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     for (size_t i = 0; i < val.size(); ++i) // truncate each
     {
         if (val[i] >= BASE || val[i] <= -BASE)
         {
-            div_t dt = div(val[i], BASE);
+            div_t dt = my_div(val[i], BASE);
             val[i] = dt.rem;
             if (i + 1 >= val.size())
             {
@@ -1146,7 +1148,7 @@ inline void InfInt::truncateToBase()
 
 inline bool InfInt::equalizeSigns()
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     bool isPositive = true;
     int i = (int) ((val.size())) - 1;
     for (; i >= 0; --i)
@@ -1204,7 +1206,7 @@ inline bool InfInt::equalizeSigns()
 
 inline void InfInt::removeLeadingZeros()
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     for (int i = (int) (val.size()) - 1; i > 0; --i) // remove leading 0's
     {
         if (val[i] != 0)
@@ -1220,7 +1222,7 @@ inline void InfInt::removeLeadingZeros()
 
 inline void InfInt::correct(bool justCheckLeadingZeros, bool hasValidSign)
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     if (!justCheckLeadingZeros)
     {
         truncateToBase();
@@ -1244,10 +1246,9 @@ inline void InfInt::correct(bool justCheckLeadingZeros, bool hasValidSign)
 
 inline void InfInt::fromString(const std::string& s)
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     pos = true;
     val.clear();
-    // TODO use resize
     val.reserve(s.size() / DIGIT_COUNT + 1);
     int i = (int) s.size() - DIGIT_COUNT;
     for (; i >= 0; i -= DIGIT_COUNT)
@@ -1276,12 +1277,12 @@ inline void InfInt::fromString(const std::string& s)
 
 inline ELEM_TYPE InfInt::dInR(const InfInt& R, const InfInt& D)
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     ELEM_TYPE min = 0, max = UPPER_BOUND;
     while (max > min)
     {
         ELEM_TYPE avg = max + min;
-        div_t dt = div(avg, 2);
+        div_t dt = my_div(avg, 2);
         avg = dt.rem ? (dt.quot + 1) : dt.quot;
         InfInt prod = D * avg;
         if (R == prod)
@@ -1302,20 +1303,14 @@ inline ELEM_TYPE InfInt::dInR(const InfInt& R, const InfInt& D)
 
 inline void InfInt::multiplyByDigit(ELEM_TYPE factor, std::vector<ELEM_TYPE>& val)
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     ELEM_TYPE carry = 0;
     for (size_t i = 0; i < val.size(); ++i)
     {
         PRODUCT_TYPE pval = val[i] * (PRODUCT_TYPE) factor + carry;
         if (pval >= BASE || pval <= -BASE)
         {
-            //carry = (ELEM_TYPE) (pval / BASE);
-            //pval %= BASE;
-
-            //carry = (ELEM_TYPE) (pval / BASE);
-            //pval -= carry * BASE;
-
-            lldiv_t dt = lldiv(pval, BASE);
+            lldiv_t dt = my_lldiv(pval, BASE);
             carry = (ELEM_TYPE) dt.quot;
             pval = dt.rem;
         }
@@ -1337,7 +1332,7 @@ inline void InfInt::multiplyByDigit(ELEM_TYPE factor, std::vector<ELEM_TYPE>& va
 
 inline std::istream& operator>>(std::istream &s, InfInt &n)
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     std::string str;
     s >> str;
     n.fromString(str);
@@ -1346,7 +1341,7 @@ inline std::istream& operator>>(std::istream &s, InfInt &n)
 
 inline std::ostream& operator<<(std::ostream &s, const InfInt &n)
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     if (!n.pos)
     {
         s << '-';
