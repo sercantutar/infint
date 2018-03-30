@@ -71,16 +71,16 @@ private:
     std::string txt;
 };
 
-InfIntException::InfIntException(const std::string& txt) throw () :
+inline InfIntException::InfIntException(const std::string& txt) throw () :
 std::exception(), txt(txt)
 {
 }
 
-InfIntException::~InfIntException() throw ()
+inline InfIntException::~InfIntException() throw ()
 {
 }
 
-const char* InfIntException::what() const throw ()
+inline const char* InfIntException::what() const throw ()
 {
     return txt.c_str();
 }
