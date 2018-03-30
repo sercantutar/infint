@@ -582,27 +582,30 @@ inline const InfInt& InfInt::operator/=(const InfInt& rhs)
 inline const InfInt& InfInt::operator%=(const InfInt& rhs)
 {
     //PROFINY_SCOPE
-    if (rhs == 0)
-    {
-#ifdef INFINT_USE_EXCEPTIONS
-        throw InfIntException("division by zero");
-#else
-        std::cerr << "Division by zero!" << std::endl;
-        return *this;
-#endif
-    }
-    InfInt D = (rhs.pos ? rhs : -rhs), N = (pos ? *this : -*this);
-    bool oldpos = pos;
-    val.clear();
-    for (int i = (int) N.val.size() - 1; i >= 0; --i)
-    {
-        val.insert(val.begin(), N.val[i]);
-        correct(true);
-        *this -= D * dInR(*this, D);
-    }
-    correct();
-    pos = (val.size() == 1 && val[0] == 0) ? true : oldpos;
+    // TODO: optimize (do not use operator%)
+    *this = *this % rhs;
     return *this;
+//    if (rhs == 0)
+//    {
+//#ifdef INFINT_USE_EXCEPTIONS
+//        throw InfIntException("division by zero");
+//#else
+//        std::cerr << "Division by zero!" << std::endl;
+//        return *this;
+//#endif
+//    }
+//    InfInt D = (rhs.pos ? rhs : -rhs), N = (pos ? *this : -*this);
+//    bool oldpos = pos;
+//    val.clear();
+//    for (int i = (int) N.val.size() - 1; i >= 0; --i)
+//    {
+//        val.insert(val.begin(), N.val[i]);
+//        correct(true);
+//        *this -= D * dInR(*this, D);
+//    }
+//    correct();
+//    pos = (val.size() == 1 && val[0] == 0) ? true : oldpos;
+//    return *this;
 }
 
 inline const InfInt& InfInt::operator*=(ELEM_TYPE rhs)
