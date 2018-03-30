@@ -39,6 +39,7 @@
 #include <vector>
 #include <sstream>
 #include <iomanip>
+#include <climits>
 
 //#include <limits.h>
 //#include <stdlib.h>
