@@ -1,8 +1,8 @@
 //#define USE_PROFINY
 #include "InfInt.h"
 
-#define PROFINY_CALL_GRAPH_PROFILER
-#include "..\profiny\Profiny.h"
+//#define PROFINY_CALL_GRAPH_PROFILER
+//#include "..\profiny\Profiny.h"
 
 #include <assert.h>
 //#include <limits.h>
@@ -136,7 +136,7 @@ void testInfInteger()
 
 int main(int argc, const char * argv[])
 {
-    PROFINY_SCOPE
+    //PROFINY_SCOPE
     //testInfInteger();
     //fib(200000);
     //fact(40000);
