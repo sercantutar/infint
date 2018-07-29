@@ -42,7 +42,7 @@
 #include <climits>
 
 //#include <limits.h>
-//#include <stdlib.h>
+#include <stdlib.h>
 
 #ifdef _WIN32
 #define LONG_LONG_MIN LLONG_MIN
