@@ -1213,16 +1213,9 @@ inline bool InfInt::equalizeSigns()
 inline void InfInt::removeLeadingZeros()
 {
     //PROFINY_SCOPE
-    for (int i = (int) (val.size()) - 1; i > 0; --i) // remove leading 0's
+    while (val.size() > 1 && val.back() == 0) // remove leading 0's
     {
-        if (val[i] != 0)
-        {
-            return;
-        }
-        else
-        {
-            val.erase(val.begin() + i);
-        }
+        val.pop_back();
     }
 }
 
