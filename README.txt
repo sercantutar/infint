@@ -15,6 +15,8 @@ It is pretty straight forward to use the library. Just create an instance of Inf
 Useful methods:
 
     intSqrt: integer square root operation
+    log2: integer log2 operation
+    log10: integer log10 operation
     digitAt: returns digit at index
     numberOfDigits: returns number of digits
     size: returns size in bytes

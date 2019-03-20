@@ -173,6 +173,10 @@ public:
 
     /* integer square root */
     InfInt intSqrt() const; // throw
+    
+    /* logarithms */
+    InfInt log2() { return this->log(2); };
+    InfInt log10() { return this->log(10); };
 
     /* digit operations */
     char digitAt(size_t i) const; // throw
@@ -202,6 +206,7 @@ private:
     void truncateToBase();
     bool equalizeSigns();
     void removeLeadingZeros();
+    InfInt log(int) const;
 
     std::vector<ELEM_TYPE> val; // number with base FACTOR
     bool pos; // true if number is positive
@@ -976,6 +981,24 @@ inline InfInt InfInt::intSqrt() const
         }
     } while (lo < hi - 1 && mid2 != *this);
     return lo;
+}
+
+inline InfInt InfInt::log(int n) const
+{
+    //Find the most significant bit
+    InfInt x = *this;
+    while (x.val.size() > 1 && x.val.back() == 0)
+    {
+        x.val.pop_back();
+    }
+
+    int result = 0;
+    while (x > InfInt(1))
+    {
+        result++;
+        x /= n;
+    }  
+    return result;
 }
 
 inline char InfInt::digitAt(size_t i) const
