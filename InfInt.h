@@ -1385,103 +1385,103 @@ inline std::ostream& operator<<(std::ostream &s, const InfInt &n)
 }
 
 /* non-member operators */
-InfInt operator+(char const* lhs, InfInt const& rhs) { return rhs + lhs; }
-InfInt operator+(std::string const& lhs, InfInt const& rhs) { return rhs + lhs; }
-InfInt operator+(int lhs, InfInt const& rhs) { return rhs + lhs; }
-InfInt operator+(long lhs, InfInt const& rhs) { return rhs + lhs; }
-InfInt operator+(long long lhs, InfInt const& rhs) { return rhs + lhs; }
-InfInt operator+(unsigned int lhs, InfInt const& rhs) { return rhs + lhs; }
-InfInt operator+(unsigned long lhs, InfInt const& rhs) { return rhs + lhs; }
-InfInt operator+(unsigned long long lhs, InfInt const& rhs) { return rhs + lhs; }
+InfInt operator+(char const* lhs, InfInt const& rhs) { return InfInt(lhs) + rhs; }
+InfInt operator+(std::string const& lhs, InfInt const& rhs) { return InfInt(lhs) + rhs; }
+InfInt operator+(int lhs, InfInt const& rhs) { return InfInt(lhs) + rhs; }
+InfInt operator+(long lhs, InfInt const& rhs) { return InfInt(lhs) + rhs; }
+InfInt operator+(long long lhs, InfInt const& rhs) { return InfInt(lhs) + rhs; }
+InfInt operator+(unsigned int lhs, InfInt const& rhs) { return InfInt(lhs) + rhs; }
+InfInt operator+(unsigned long lhs, InfInt const& rhs) { return InfInt(lhs) + rhs; }
+InfInt operator+(unsigned long long lhs, InfInt const& rhs) { return InfInt(lhs) + rhs; }
 
-InfInt operator-(char const* lhs, InfInt const& rhs) { return rhs - lhs; }
-InfInt operator-(std::string const& lhs, InfInt const& rhs) { return rhs - lhs; }
-InfInt operator-(int lhs, InfInt const& rhs) { return rhs - lhs; }
-InfInt operator-(long lhs, InfInt const& rhs) { return rhs - lhs; }
-InfInt operator-(long long lhs, InfInt const& rhs) { return rhs - lhs; }
-InfInt operator-(unsigned int lhs, InfInt const& rhs) { return rhs - lhs; }
-InfInt operator-(unsigned long lhs, InfInt const& rhs) { return rhs - lhs; }
-InfInt operator-(unsigned long long lhs, InfInt const& rhs) { return rhs - lhs; }
+InfInt operator-(char const* lhs, InfInt const& rhs) { return InfInt(lhs) - rhs; }
+InfInt operator-(std::string const& lhs, InfInt const& rhs) { return InfInt(lhs) - rhs; }
+InfInt operator-(int lhs, InfInt const& rhs) { return InfInt(lhs) - rhs; }
+InfInt operator-(long lhs, InfInt const& rhs) { return InfInt(lhs) - rhs; }
+InfInt operator-(long long lhs, InfInt const& rhs) { return InfInt(lhs) - rhs; }
+InfInt operator-(unsigned int lhs, InfInt const& rhs) { return InfInt(lhs) - rhs; }
+InfInt operator-(unsigned long lhs, InfInt const& rhs) { return InfInt(lhs) - rhs; }
+InfInt operator-(unsigned long long lhs, InfInt const& rhs) { return InfInt(lhs) - rhs; }
 
-InfInt operator*(char const* lhs, InfInt const& rhs) { return rhs * lhs; }
-InfInt operator*(std::string const& lhs, InfInt const& rhs) { return rhs * lhs; }
-InfInt operator*(int lhs, InfInt const& rhs) { return rhs * lhs; }
-InfInt operator*(long lhs, InfInt const& rhs) { return rhs * lhs; }
-InfInt operator*(long long lhs, InfInt const& rhs) { return rhs * lhs; }
-InfInt operator*(unsigned int lhs, InfInt const& rhs) { return rhs * lhs; }
-InfInt operator*(unsigned long lhs, InfInt const& rhs) { return rhs * lhs; }
-InfInt operator*(unsigned long long lhs, InfInt const& rhs) { return rhs * lhs; }
+InfInt operator*(char const* lhs, InfInt const& rhs) { return InfInt(lhs) * rhs; }
+InfInt operator*(std::string const& lhs, InfInt const& rhs) { return InfInt(lhs) * rhs; }
+InfInt operator*(int lhs, InfInt const& rhs) { return InfInt(lhs) * rhs; }
+InfInt operator*(long lhs, InfInt const& rhs) { return InfInt(lhs) * rhs; }
+InfInt operator*(long long lhs, InfInt const& rhs) { return InfInt(lhs) * rhs; }
+InfInt operator*(unsigned int lhs, InfInt const& rhs) { return InfInt(lhs) * rhs; }
+InfInt operator*(unsigned long lhs, InfInt const& rhs) { return InfInt(lhs) * rhs; }
+InfInt operator*(unsigned long long lhs, InfInt const& rhs) { return InfInt(lhs) * rhs; }
 
-InfInt operator/(char const* lhs, InfInt const& rhs) { return rhs / lhs; }
-InfInt operator/(std::string const& lhs, InfInt const& rhs) { return rhs / lhs; }
-InfInt operator/(int lhs, InfInt const& rhs) { return rhs / lhs; }
-InfInt operator/(long lhs, InfInt const& rhs) { return rhs / lhs; }
-InfInt operator/(long long lhs, InfInt const& rhs) { return rhs / lhs; }
-InfInt operator/(unsigned int lhs, InfInt const& rhs) { return rhs / lhs; }
-InfInt operator/(unsigned long lhs, InfInt const& rhs) { return rhs / lhs; }
-InfInt operator/(unsigned long long lhs, InfInt const& rhs) { return rhs / lhs; }
+InfInt operator/(char const* lhs, InfInt const& rhs) { return InfInt(lhs) / rhs; }
+InfInt operator/(std::string const& lhs, InfInt const& rhs) { return InfInt(lhs) / rhs; }
+InfInt operator/(int lhs, InfInt const& rhs) { return InfInt(lhs) / rhs; }
+InfInt operator/(long lhs, InfInt const& rhs) { return InfInt(lhs) / rhs; }
+InfInt operator/(long long lhs, InfInt const& rhs) { return InfInt(lhs) / rhs; }
+InfInt operator/(unsigned int lhs, InfInt const& rhs) { return InfInt(lhs) / rhs; }
+InfInt operator/(unsigned long lhs, InfInt const& rhs) { return InfInt(lhs) / rhs; }
+InfInt operator/(unsigned long long lhs, InfInt const& rhs) { return InfInt(lhs) / rhs; }
 
-InfInt operator%(char const* lhs, InfInt const& rhs) { return rhs % lhs; }
-InfInt operator%(std::string const& lhs, InfInt const& rhs) { return rhs % lhs; }
-InfInt operator%(int lhs, InfInt const& rhs) { return rhs % lhs; }
-InfInt operator%(long lhs, InfInt const& rhs) { return rhs % lhs; }
-InfInt operator%(long long lhs, InfInt const& rhs) { return rhs % lhs; }
-InfInt operator%(unsigned int lhs, InfInt const& rhs) { return rhs % lhs; }
-InfInt operator%(unsigned long lhs, InfInt const& rhs) { return rhs % lhs; }
-InfInt operator%(unsigned long long lhs, InfInt const& rhs) { return rhs % lhs; }
+InfInt operator%(char const* lhs, InfInt const& rhs) { return InfInt(lhs) % rhs; }
+InfInt operator%(std::string const& lhs, InfInt const& rhs) { return InfInt(lhs) % rhs; }
+InfInt operator%(int lhs, InfInt const& rhs) { return InfInt(lhs) % rhs; }
+InfInt operator%(long lhs, InfInt const& rhs) { return InfInt(lhs) % rhs; }
+InfInt operator%(long long lhs, InfInt const& rhs) { return InfInt(lhs) % rhs; }
+InfInt operator%(unsigned int lhs, InfInt const& rhs) { return InfInt(lhs) % rhs; }
+InfInt operator%(unsigned long lhs, InfInt const& rhs) { return InfInt(lhs) % rhs; }
+InfInt operator%(unsigned long long lhs, InfInt const& rhs) { return InfInt(lhs) % rhs; }
 
-InfInt operator==(char const* lhs, InfInt const& rhs) { return rhs == lhs; }
-InfInt operator==(std::string const& lhs, InfInt const& rhs) { return rhs == lhs; }
-InfInt operator==(int lhs, InfInt const& rhs) { return rhs == lhs; }
-InfInt operator==(long lhs, InfInt const& rhs) { return rhs == lhs; }
-InfInt operator==(long long lhs, InfInt const& rhs) { return rhs == lhs; }
-InfInt operator==(unsigned int lhs, InfInt const& rhs) { return rhs == lhs; }
-InfInt operator==(unsigned long lhs, InfInt const& rhs) { return rhs == lhs; }
-InfInt operator==(unsigned long long lhs, InfInt const& rhs) { return rhs == lhs; }
+InfInt operator==(char const* lhs, InfInt const& rhs) { return InfInt(lhs) == rhs; }
+InfInt operator==(std::string const& lhs, InfInt const& rhs) { return InfInt(lhs) == rhs; }
+InfInt operator==(int lhs, InfInt const& rhs) { return InfInt(lhs) == rhs; }
+InfInt operator==(long lhs, InfInt const& rhs) { return InfInt(lhs) == rhs; }
+InfInt operator==(long long lhs, InfInt const& rhs) { return InfInt(lhs) == rhs; }
+InfInt operator==(unsigned int lhs, InfInt const& rhs) { return InfInt(lhs) == rhs; }
+InfInt operator==(unsigned long lhs, InfInt const& rhs) { return InfInt(lhs) == rhs; }
+InfInt operator==(unsigned long long lhs, InfInt const& rhs) { return InfInt(lhs) == rhs; }
 
-InfInt operator!=(char const* lhs, InfInt const& rhs) { return rhs != lhs; }
-InfInt operator!=(std::string const& lhs, InfInt const& rhs) { return rhs != lhs; }
-InfInt operator!=(int lhs, InfInt const& rhs) { return rhs != lhs; }
-InfInt operator!=(long lhs, InfInt const& rhs) { return rhs != lhs; }
-InfInt operator!=(long long lhs, InfInt const& rhs) { return rhs != lhs; }
-InfInt operator!=(unsigned int lhs, InfInt const& rhs) { return rhs != lhs; }
-InfInt operator!=(unsigned long lhs, InfInt const& rhs) { return rhs != lhs; }
-InfInt operator!=(unsigned long long lhs, InfInt const& rhs) { return rhs != lhs; }
+InfInt operator!=(char const* lhs, InfInt const& rhs) { return InfInt(lhs) != rhs; }
+InfInt operator!=(std::string const& lhs, InfInt const& rhs) { return InfInt(lhs) != rhs; }
+InfInt operator!=(int lhs, InfInt const& rhs) { return InfInt(lhs) != rhs; }
+InfInt operator!=(long lhs, InfInt const& rhs) { return InfInt(lhs) != rhs; }
+InfInt operator!=(long long lhs, InfInt const& rhs) { return InfInt(lhs) != rhs; }
+InfInt operator!=(unsigned int lhs, InfInt const& rhs) { return InfInt(lhs) != rhs; }
+InfInt operator!=(unsigned long lhs, InfInt const& rhs) { return InfInt(lhs) != rhs; }
+InfInt operator!=(unsigned long long lhs, InfInt const& rhs) { return InfInt(lhs) != rhs; }
 
-InfInt operator<(char const* lhs, InfInt const& rhs) { return rhs < lhs; }
-InfInt operator<(std::string const& lhs, InfInt const& rhs) { return rhs < lhs; }
-InfInt operator<(int lhs, InfInt const& rhs) { return rhs < lhs; }
-InfInt operator<(long lhs, InfInt const& rhs) { return rhs < lhs; }
-InfInt operator<(long long lhs, InfInt const& rhs) { return rhs < lhs; }
-InfInt operator<(unsigned int lhs, InfInt const& rhs) { return rhs < lhs; }
-InfInt operator<(unsigned long lhs, InfInt const& rhs) { return rhs < lhs; }
-InfInt operator<(unsigned long long lhs, InfInt const& rhs) { return rhs < lhs; }
+InfInt operator<(char const* lhs, InfInt const& rhs) { return InfInt(lhs) < rhs; }
+InfInt operator<(std::string const& lhs, InfInt const& rhs) { return InfInt(lhs) < rhs; }
+InfInt operator<(int lhs, InfInt const& rhs) { return InfInt(lhs) < rhs; }
+InfInt operator<(long lhs, InfInt const& rhs) { return InfInt(lhs) < rhs; }
+InfInt operator<(long long lhs, InfInt const& rhs) { return InfInt(lhs) < rhs; }
+InfInt operator<(unsigned int lhs, InfInt const& rhs) { return InfInt(lhs) < rhs; }
+InfInt operator<(unsigned long lhs, InfInt const& rhs) { return InfInt(lhs) < rhs; }
+InfInt operator<(unsigned long long lhs, InfInt const& rhs) { return InfInt(lhs) < rhs; }
 
-InfInt operator<=(char const* lhs, InfInt const& rhs) { return rhs <= lhs; }
-InfInt operator<=(std::string const& lhs, InfInt const& rhs) { return rhs <= lhs; }
-InfInt operator<=(int lhs, InfInt const& rhs) { return rhs <= lhs; }
-InfInt operator<=(long lhs, InfInt const& rhs) { return rhs <= lhs; }
-InfInt operator<=(long long lhs, InfInt const& rhs) { return rhs <= lhs; }
-InfInt operator<=(unsigned int lhs, InfInt const& rhs) { return rhs <= lhs; }
-InfInt operator<=(unsigned long lhs, InfInt const& rhs) { return rhs <= lhs; }
-InfInt operator<=(unsigned long long lhs, InfInt const& rhs) { return rhs <= lhs; }
+InfInt operator<=(char const* lhs, InfInt const& rhs) { return InfInt(lhs) <= rhs; }
+InfInt operator<=(std::string const& lhs, InfInt const& rhs) { return InfInt(lhs) <= rhs; }
+InfInt operator<=(int lhs, InfInt const& rhs) { return InfInt(lhs) <= rhs; }
+InfInt operator<=(long lhs, InfInt const& rhs) { return InfInt(lhs) <= rhs; }
+InfInt operator<=(long long lhs, InfInt const& rhs) { return InfInt(lhs) <= rhs; }
+InfInt operator<=(unsigned int lhs, InfInt const& rhs) { return InfInt(lhs) <= rhs; }
+InfInt operator<=(unsigned long lhs, InfInt const& rhs) { return InfInt(lhs) <= rhs; }
+InfInt operator<=(unsigned long long lhs, InfInt const& rhs) { return InfInt(lhs) <= rhs; }
 
-InfInt operator>(char const* lhs, InfInt const& rhs) { return rhs > lhs; }
-InfInt operator>(std::string const& lhs, InfInt const& rhs) { return rhs > lhs; }
-InfInt operator>(int lhs, InfInt const& rhs) { return rhs > lhs; }
-InfInt operator>(long lhs, InfInt const& rhs) { return rhs > lhs; }
-InfInt operator>(long long lhs, InfInt const& rhs) { return rhs > lhs; }
-InfInt operator>(unsigned int lhs, InfInt const& rhs) { return rhs > lhs; }
-InfInt operator>(unsigned long lhs, InfInt const& rhs) { return rhs > lhs; }
-InfInt operator>(unsigned long long lhs, InfInt const& rhs) { return rhs > lhs; }
+InfInt operator>(char const* lhs, InfInt const& rhs) { return InfInt(lhs) > rhs; }
+InfInt operator>(std::string const& lhs, InfInt const& rhs) { return InfInt(lhs) > rhs; }
+InfInt operator>(int lhs, InfInt const& rhs) { return InfInt(lhs) > rhs; }
+InfInt operator>(long lhs, InfInt const& rhs) { return InfInt(lhs) > rhs; }
+InfInt operator>(long long lhs, InfInt const& rhs) { return InfInt(lhs) > rhs; }
+InfInt operator>(unsigned int lhs, InfInt const& rhs) { return InfInt(lhs) > rhs; }
+InfInt operator>(unsigned long lhs, InfInt const& rhs) { return InfInt(lhs) > rhs; }
+InfInt operator>(unsigned long long lhs, InfInt const& rhs) { return InfInt(lhs) > rhs; }
 
-InfInt operator>=(char const* lhs, InfInt const& rhs) { return rhs >= lhs; }
-InfInt operator>=(std::string const& lhs, InfInt const& rhs) { return rhs >= lhs; }
-InfInt operator>=(int lhs, InfInt const& rhs) { return rhs >= lhs; }
-InfInt operator>=(long lhs, InfInt const& rhs) { return rhs >= lhs; }
-InfInt operator>=(long long lhs, InfInt const& rhs) { return rhs >= lhs; }
-InfInt operator>=(unsigned int lhs, InfInt const& rhs) { return rhs >= lhs; }
-InfInt operator>=(unsigned long lhs, InfInt const& rhs) { return rhs >= lhs; }
-InfInt operator>=(unsigned long long lhs, InfInt const& rhs) { return rhs >= lhs; }
+InfInt operator>=(char const* lhs, InfInt const& rhs) { return InfInt(lhs) >= rhs; }
+InfInt operator>=(std::string const& lhs, InfInt const& rhs) { return InfInt(lhs) >= rhs; }
+InfInt operator>=(int lhs, InfInt const& rhs) { return InfInt(lhs) >= rhs; }
+InfInt operator>=(long lhs, InfInt const& rhs) { return InfInt(lhs) >= rhs; }
+InfInt operator>=(long long lhs, InfInt const& rhs) { return InfInt(lhs) >= rhs; }
+InfInt operator>=(unsigned int lhs, InfInt const& rhs) { return InfInt(lhs) >= rhs; }
+InfInt operator>=(unsigned long lhs, InfInt const& rhs) { return InfInt(lhs) >= rhs; }
+InfInt operator>=(unsigned long long lhs, InfInt const& rhs) { return InfInt(lhs) >= rhs; }
 
 #endif
