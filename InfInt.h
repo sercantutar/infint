@@ -673,9 +673,9 @@ inline InfInt InfInt::operator*(const InfInt& rhs) const
             PRODUCT_TYPE pval = result.val[digit] + val[i] * (PRODUCT_TYPE) rhs.val[digit - i];
             if (pval >= BASE || pval <= -BASE)
             {
-                lldiv_t dt = my_lldiv(pval, BASE);
-                carry += dt.quot;
-                pval = dt.rem;
+                lldiv_t dt_ = my_lldiv(pval, BASE);
+                carry += dt_.quot;
+                pval = dt_.rem;
             }
             result.val[digit] = (ELEM_TYPE) pval;
             found = true;
